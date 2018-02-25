@@ -1,0 +1,120 @@
+extends layout
+
+block content
+  .full
+    .container
+      .row
+        .col-md-6
+          // 
+          canvas#canvas1(width='500', height='700')
+          canvas#cleanCanvas(width='500', height='700', style='display:none')
+        .col-md-4.search-area
+          .row
+            .col-md-4
+              p
+                strong Formation:
+            .col-md-8
+              select#formationSelect.form-control
+                option(value='3412') 3-4-1-2
+                option(value='3421') 3-4-2-1
+                option(value='343') 3-4-3
+                option(value='352') 3-5-2
+                option(value='41212a') 4-1-2-1-2 (a)
+                option(value='41212b') 4-1-2-1-2 (b)
+                option(value='4141') 4-1-4-1
+                option(value='4222') 4-2-2-2
+                option(value='4231a') 4-2-3-1 (a)
+                option(value='4231b') 4-2-3-1 (b)
+                option(value='4312') 4-3-1-2
+                option(value='4321', selected='') 4-3-2-1
+                option(value='433a') 4-3-3 (a)
+                option(value='433b') 4-3-3 (b)
+                option(value='433c') 4-3-3 (c)
+                option(value='433d') 4-3-3 (d)
+                option(value='433e') 4-3-3 (e)
+                option(value='4411') 4-4-1-1
+                option(value='442a') 4-4-2 (a)
+                option(value='442b') 4-4-2 (b)
+                option(value='451a') 4-5-1 (a)
+                option(value='451b') 4-5-1 (b)
+                option(value='5212') 5-2-1-2
+                option(value='5221') 5-2-2-1
+                option(value='532') 5-3-2
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+          .row
+            .col-md-2.pos-cont
+              span.position
+            .col-md-10.search-cont
+              select.search-entity(placeholder='', style='width:100%')
+                option
+        .col-md-2
+          button#image.btn.btn-sm(type='button')  Insert Image
+          button#convert.btn.btn-sm(type='button')  Download
+          br
+          #results
+          // Results will be printed here
+          #selected
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src='/javascripts/plugins.js')
+  script(src='/javascripts/select2.min.js')
+  script(src='/javascripts/formations.js')
+  script(src='/javascripts/main.js')
