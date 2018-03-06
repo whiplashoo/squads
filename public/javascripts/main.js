@@ -246,8 +246,9 @@ function prepareCanvas(canvasId) {
 $(".position").hover(function(){
     $(this).addClass('highlight');
     
-    var id = $(this).find('.search-entity').data('id');
-    if (!currentData[id]) {
+    var select = $(this).find('.search-entity');
+    var id = select.data('id');
+    if ( !currentData[id]) {
         var destX = parseInt(select.attr('data-cx'));
         var destY = parseInt(select.attr('data-cy'));
         var posName = currentFormation[select.attr('data-id')].pos;
@@ -258,7 +259,8 @@ $(".position").hover(function(){
   }, function() {
     $(this).removeClass('highlight');
 
-    var id = $(this).find('.search-entity').data('id');
+    var select = $(this).find('.search-entity');
+    var id = select.data('id');
     if (!currentData[id]) {
         var destX = parseInt(select.attr('data-cx'));
         var destY = parseInt(select.attr('data-cy'));
@@ -268,6 +270,7 @@ $(".position").hover(function(){
         drawPositionCircle(ctx, posName, destX, destY, "#fff");
     }
 });
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
