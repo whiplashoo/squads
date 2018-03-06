@@ -57,3 +57,8 @@ typings/
 # dotenv environment variables file
 .env
 
+COMMANDS.txt
+mydump.csv
+replaceaccented.js
+populatedb.js
+

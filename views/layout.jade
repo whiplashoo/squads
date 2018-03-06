@@ -7,8 +7,8 @@ head
   meta(name='viewport', content='width=device-width, initial-scale=1')
   link(rel='apple-touch-icon', href='apple-touch-icon.png')
   link(rel='stylesheet', href='/stylesheets/normalize.css')
+  link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css')
   link(rel='stylesheet', href='/stylesheets/main.css')
-  link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
   script(src='/javascripts/modernizr-2.8.3.min.js')
   link(rel='stylesheet', href='/stylesheets/select2.min.css')
 //if lt IE 8
@@ -19,21 +19,17 @@ head
     a(href='http://browsehappy.com/') upgrade your browser
     |  to improve your experience.
 body
-  nav.navbar.navbar-default(role='navigation')
-    .container-fluid
-      // Brand and toggle get grouped for better mobile display
-      .navbar-header
-        button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
-          span.sr-only Toggle navigation
-          span.icon-bar
-          span.icon-bar
-          span.icon-bar
-        a.navbar-brand(href='/')  Football Squads 
-      #bs-example-navbar-collapse-1.collapse.navbar-collapse
-        ul.nav.navbar-nav
-          li
-            a(href='showcase.html') Showcase
-          li
-            a(href='feedback.html') Feedback
+  nav.navbar.is-dark(role='navigation')
+    .navbar-brand
+      a.navbar-item(href='/')
+        img(src='https://bulma.io/images/bulma-logo.png')
+      .navbar-burger(data-target='navMenu')
+        span
+        span
+        span 
+    .navbar-menu#navMenu
+      .navbar-end
+        a.navbar-item(href='showcase.html') Showcase
+        a.navbar-item(href='feedback.html') Feedback
   block content
 
