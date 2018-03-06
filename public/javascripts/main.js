@@ -33,7 +33,6 @@ $(document).ready(function() {
         var selName = '<span class="player-name sel-name"><strong>' + selected.text + '</strong></span>';
         var selImg = '<img class="player-img sel-img" id="sel-img"  src="' + imgURL + '"/>';
         var selDetails = '<span class="player-details">' + selected.pos + '</span>';
-        //$("#selected").append(selName + selImg + selDetails);
 
         var canvas = document.getElementById("canvas1");
         var ctx = canvas.getContext("2d");
@@ -77,17 +76,17 @@ function optionData(data, container) {
 
 function template(data, container) {
     if (data.text && data.s3url) {
-        var pImg = '<img class="player-img" src="https://s3.eu-west-2.amazonaws.com/players-whidev/' + data.s3url + '.png"/>';
-        var pName = '<span class="player-name"><strong>' + data.text + '</strong></span>';
-        var pDetails = '<span class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</span>';
-        return pImg + pName + pDetails;
+        var pImg = '<div class="column is-one-third"><img class="player-img" src="https://s3.eu-west-2.amazonaws.com/players-whidev/' + data.s3url + '.png"/></div>';
+        var pName = '<div class="column"><p class="player-name"><strong>' + data.text + '</strong></p>';
+        var pDetails = '<p class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</p></div>';
+        return '<div class="columns">' + pImg + pName + pDetails + '</div>';
     }
 }
 
 
 function setFormation(f, canvasId) {
     var selects = $(".search-entity");
-    var positions = $(".position");
+    var positions = $(".position-label");
 
     var canvas = document.getElementById(canvasId);
     var ctx = canvas.getContext("2d");
@@ -122,7 +121,7 @@ function setFormation(f, canvasId) {
             ctx.textAlign = "center";
             ctx.fillText(data.text.split(" ").splice(-1), destX + 50, destY + 115);
         } else {
-            drawPositionCircle(ctx, posName, destX, destY);
+            drawPositionCircle(ctx, posName, destX, destY, "#fff");
         }
 
         // Set the new attributes for each position.
@@ -139,13 +138,13 @@ var drawCanvasImage = function(ctx, imageObj, destX, destY) {
     }
 }
 
-function drawPositionCircle(ctx, posName, destX, destY) {
+function drawPositionCircle(ctx, posName, destX, destY, color) {
     ctx.beginPath();
     ctx.arc(destX + 50, destY + 50, 20, 0, 2 * Math.PI, false);
     ctx.fillStyle = circleColors[posName];
     ctx.fill();
     ctx.lineWidth = 1;
-    ctx.strokeStyle = '#fff';
+    ctx.strokeStyle = color;
     ctx.stroke();
     ctx.font = "bold 14px system-ui";
     ctx.fillStyle = "white";
@@ -153,6 +152,7 @@ function drawPositionCircle(ctx, posName, destX, destY) {
     ctx.fillText(posName.toUpperCase(), destX + 50, destY + 55);
     ctx.closePath();
 }
+
 
 function prepareCanvas(canvasId) {
     var canvas = document.getElementById(canvasId);
@@ -236,7 +236,7 @@ function prepareCanvas(canvasId) {
 
     // -- START DRAWING THE POSITION CIRCLES --
     var selects = $(".search-entity");
-    var positions = $(".position");
+    var positions = $(".position-label");
     for (var i = 0; i < 11; i++) {
         var sel = selects[i];
         var newPos = currentFormation[i];
@@ -244,7 +244,7 @@ function prepareCanvas(canvasId) {
         var destY = newPos.cy;
         var posName = newPos.pos;
 
-        drawPositionCircle(ctx, posName, destX, destY);
+        drawPositionCircle(ctx, posName, destX, destY, "#fff");
 
         // Set the new attributes for each newPosition
         sel.setAttribute("data-id", i);
@@ -255,6 +255,35 @@ function prepareCanvas(canvasId) {
     // -- END DRAWING THE POSITION CIRCLES --
 
 }
+
+$(".position").hover(function(){
+    $(this).addClass('highlight');
+
+    var select = $(this).find('.search-entity');
+    if (select.val() === '') {
+        var destX = parseInt(select.attr('data-cx'));
+        var destY = parseInt(select.attr('data-cy'));
+        var posName = currentFormation[select.attr('data-id')].pos;
+        var canvas = document.getElementById("canvas1");
+        var ctx = canvas.getContext("2d");
+        drawPositionCircle(ctx, posName, destX, destY, "#000");
+    }
+  }, function() {
+    $(this).removeClass('highlight');
+
+    var select = $(this).find('.search-entity');
+    if (select.val() === '') {
+        var destX = parseInt(select.attr('data-cx'));
+        var destY = parseInt(select.attr('data-cy'));
+        var posName = currentFormation[select.attr('data-id')].pos;
+        var canvas = document.getElementById("canvas1");
+        var ctx = canvas.getContext("2d");
+        drawPositionCircle(ctx, posName, destX, destY, "#fff");
+    }
+});
+
+
+
 
 $('#image').click(function() {
     var imgURL = $('.sel-img').attr("src");
@@ -302,3 +331,30 @@ function convert() {
     $('#canvas1').show();
     $('#squad').hide();
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+
+  // Get all "navbar-burger" elements
+  var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
+
+  // Check if there are any navbar burgers
+  if ($navbarBurgers.length > 0) {
+
+    // Add a click event on each of them
+    $navbarBurgers.forEach(function ($el) {
+      $el.addEventListener('click', function () {
+
+        // Get the target from the "data-target" attribute
+        var target = $el.dataset.target;
+        var $target = document.getElementById(target);
+
+        // Toggle the class on both the "navbar-burger" and the "navbar-menu"
+        $el.classList.toggle('is-active');
+        $target.classList.toggle('is-active');
+
+      });
+    });
+  }
+
+});
