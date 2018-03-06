@@ -1,7 +1,10 @@
+var currentData = {};
+
 $(document).ready(function() {
 
     prepareCanvas("canvas1");
     prepareCanvas("cleanCanvas");
+
 
     $(".search-entity").select2({
         ajax: {
@@ -18,7 +21,6 @@ $(document).ready(function() {
         },
         placeholder: "Search for a player...",
         escapeMarkup: function(m) { return m; }, // let our custom formatter work
-        allowClear: true,
         minimumInputLength: 4,
         templateResult: template,
         templateSelection: optionData
@@ -27,44 +29,30 @@ $(document).ready(function() {
 
     $(".search-entity").on("select2:select", function(e) {
         var selected = e.params.data;
-        console.log(selected);
+        var id = $(this).data('id');
 
         var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + selected.s3url + ".png";
-        var selName = '<span class="player-name sel-name"><strong>' + selected.text + '</strong></span>';
-        var selImg = '<img class="player-img sel-img" id="sel-img"  src="' + imgURL + '"/>';
-        var selDetails = '<span class="player-details">' + selected.pos + '</span>';
+    
+        currentData[id] = {"imgURL": imgURL, "name": selected.text };
 
-        var canvas = document.getElementById("canvas1");
-        var ctx = canvas.getContext("2d");
-        var destX = parseInt(this.dataset.cx);
-        var destY = parseInt(this.dataset.cy);
+        updateCanvas(currentFormation, "canvas1");
 
-        var imageObj = new Image();
-        imageObj.src = imgURL;
-        imageObj.onload = drawCanvasImage(ctx, imageObj, destX, destY);  
-        
-        ctx.fillStyle = "#444";
-        ctx.fillRect(destX + 10, destY + 100, 80, 20);
-        ctx.font = "14px arial";
-        ctx.fillStyle = "white";
-        ctx.textAlign = "center";
-        ctx.fillText(selected.text.split(" ").splice(-1), destX + 50, destY + 115);
+        $(this).val('').trigger('change');
+ 
+        $(this).parent().siblings('.search-selected').html(selected.text);
     });
 
     $(".search-entity").on("select2:unselect", function(e) {
         var selected = e.params.data;
-        var canvas = document.getElementById("canvas1");
-        var source = document.getElementById("cleanCanvas");
-        var ctx = canvas.getContext("2d");
-        var destX = parseInt(this.dataset.cx);
-        var destY = parseInt(this.dataset.cy);
-        ctx.drawImage(source, destX, destY, 100, 120, destX, destY, 100, 120);
+        var id = $(this).data('id');
+        updateCanvas(currentFormation, "canvas1");
+        $(this).parent().siblings('.search-selected').html('');
     });
 
     $("#formationSelect").change(function() {
         currentFormation = formations[$(this).val()];
-        setFormation(currentFormation, "canvas1");
-        setFormation(currentFormation, "cleanCanvas");
+        updateCanvas(currentFormation, "canvas1");
+        updateCanvas(currentFormation, "cleanCanvas");
     });
 });
 
@@ -84,7 +72,7 @@ function template(data, container) {
 }
 
 
-function setFormation(f, canvasId) {
+function updateCanvas(f, canvasId) {
     var selects = $(".search-entity");
     var positions = $(".position-label");
 
@@ -98,17 +86,16 @@ function setFormation(f, canvasId) {
     for (var i = 0; i < 11; i++) {
         var newPos = currentFormation[i];
         var sel = selects[i];
+        var player = currentData[i.toString()];
 
         var destX = newPos.cx;
         var destY = newPos.cy;
         var posName = newPos.pos;
 
         //  If the select2 select has a value and we are on the visible canvas1, draw an image, else a simple circle.
-        if ($(sel).val() !== "" && canvasId === "canvas1" ) {
-            var data = $(sel).select2("data")[0];
-
+        if (player && player.imgURL && canvasId === "canvas1" ) {
             // Draw the image to the new newPosition
-            var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + data.s3url + ".png";
+            var imgURL = player.imgURL 
             var imageObj = new Image();
             
             imageObj.src = imgURL;
@@ -119,7 +106,7 @@ function setFormation(f, canvasId) {
             ctx.font = "14px arial";
             ctx.fillStyle = "white";
             ctx.textAlign = "center";
-            ctx.fillText(data.text.split(" ").splice(-1), destX + 50, destY + 115);
+            ctx.fillText(player.name.split(" ").splice(-1), destX + 50, destY + 115);
         } else {
             drawPositionCircle(ctx, posName, destX, destY, "#fff");
         }
@@ -258,21 +245,21 @@ function prepareCanvas(canvasId) {
 
 $(".position").hover(function(){
     $(this).addClass('highlight');
-
-    var select = $(this).find('.search-entity');
-    if (select.val() === '') {
+    
+    var id = $(this).find('.search-entity').data('id');
+    if (!currentData[id]) {
         var destX = parseInt(select.attr('data-cx'));
         var destY = parseInt(select.attr('data-cy'));
         var posName = currentFormation[select.attr('data-id')].pos;
         var canvas = document.getElementById("canvas1");
         var ctx = canvas.getContext("2d");
-        drawPositionCircle(ctx, posName, destX, destY, "#000");
+        drawPositionCircle(ctx, posName, destX, destY, "red");
     }
   }, function() {
     $(this).removeClass('highlight');
 
-    var select = $(this).find('.search-entity');
-    if (select.val() === '') {
+    var id = $(this).find('.search-entity').data('id');
+    if (!currentData[id]) {
         var destX = parseInt(select.attr('data-cx'));
         var destY = parseInt(select.attr('data-cy'));
         var posName = currentFormation[select.attr('data-id')].pos;
@@ -281,56 +268,6 @@ $(".position").hover(function(){
         drawPositionCircle(ctx, posName, destX, destY, "#fff");
     }
 });
-
-
-
-
-$('#image').click(function() {
-    var imgURL = $('.sel-img').attr("src");
-
-    var canvas = document.getElementById("canvas1");
-    var context = canvas.getContext("2d");
-    var destX = 0;
-    var destY = 0;
-    var imageObj = new Image();
-
-    imageObj.onload = function() {
-        context.drawImage(imageObj, destX, destY);
-    };
-    imageObj.src = imgURL;
-
-});
-
-$('#convert').click(function() { convert(); });
-
-function convert() {
-    var DOMURL = self.URL || self.webkitURL || self;
-    var svgString = new XMLSerializer().serializeToString(document.querySelector('#squad'));
-
-    var svgStringForWebkit = "data:image/svg+xml," + svgString;
-    var canvas1 = document.getElementById("canvas1");
-    var ctx = canvas1.getContext("2d");
-
-    var img1 = new Image();
-    img1.src = svgStringForWebkit;
-
-    img1.onload = function() {
-        ctx.drawImage(img1, 0, 0, canvas1.width, canvas1.height);
-    };
-
-    var messi = new Image();
-    messi.onload = function() {
-        ctx.drawImage(messi, 10, 20, canvas1.width, canvas1.height);
-    };
-    messi.src = document.getElementById('sel-img');
-
-
-
-    var dataURL = canvas1.toDataURL("image/png");
-
-    $('#canvas1').show();
-    $('#squad').hide();
-}
 
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -5,17 +5,30 @@
     font-weight: bold;
 }
 
+.logo {
+    margin-right: 10px;
+}
+
+.site-title {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: #d6d6d6;
+}
+
 .position:not(:last-child) {
     margin-bottom: 1rem;
 }
+
 .position {
     padding: 4px;
 }
+
 .position.highlight {
-    -webkit-box-shadow: 0px 0px 9px 3px rgba(207,207,207,1);
-    -moz-box-shadow: 0px 0px 9px 3px rgba(207,207,207,1);
-    box-shadow: 0px 0px 9px 3px rgba(207,207,207,1);
+    -webkit-box-shadow: 0px 0px 9px 3px rgba(207, 207, 207, 1);
+    -moz-box-shadow: 0px 0px 9px 3px rgba(207, 207, 207, 1);
+    box-shadow: 0px 0px 9px 3px rgba(207, 207, 207, 1);
 }
+
 .search-level {
     margin-left: 20px;
 }
@@ -23,10 +36,12 @@
 .navbar-brand, .navbar-tabs {
     min-height: 2rem;
 }
-@media screen and (min-width: 1024px) {
+
+@media screen and (min-width:1024px) {
     .navbar {
         min-height: 2rem;
     }
+
 }
 
 section.main {
