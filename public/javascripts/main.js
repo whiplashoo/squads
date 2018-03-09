@@ -82,7 +82,7 @@ function updateCanvas() {
     prepareCanvas();
 
     // Write the Title
-    ctx.font = "14px arial";
+    ctx.font = "14px Fira Sans";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
     ctx.fillText(currentTitle, 40, 40);
@@ -102,14 +102,16 @@ function updateCanvas() {
             var imgURL = player.imgURL
             var imageObj = new Image();
 
-            imageObj.src = imgURL;
+            
             imageObj.crossOrigin = "anonymous";
-            console.log(imageObj);
             imageObj.onload = drawCanvasImage(canvas, ctx, imageObj, destX, destY);
+
+            // .src always after onload event
+            imageObj.src = imgURL;
 
             ctx.fillStyle = "#444";
             ctx.fillRect(destX + 10, destY + 100, 80, 20);
-            ctx.font = "14px arial";
+            ctx.font = "14px Fira Sans";
             ctx.fillStyle = "white";
             ctx.textAlign = "center";
             ctx.fillText(player.name.split(" ").splice(-1), destX + 50, destY + 115);
