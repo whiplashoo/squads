@@ -62,7 +62,7 @@ function optionData(data, container) {
 
 function template(data, container) {
     if (data.text && data.s3url) {
-        var pImg = '<div class="column is-one-third"><img class="player-img" src="https://s3.eu-west-2.amazonaws.com/players-whidev/' + data.s3url + '.png"/></div>';
+        var pImg = '<div class="column is-one-third"><img crossorigin="anonymous" class="player-img" src="https://s3.eu-west-2.amazonaws.com/players-whidev/' + data.s3url + '.png"/></div>';
         var pName = '<div class="column"><p class="player-name"><strong>' + data.text + '</strong></p>';
         var pDetails = '<p class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</p></div>';
         return '<div class="columns">' + pImg + pName + pDetails + '</div>';
@@ -99,7 +99,7 @@ function updateCanvas() {
         //  If the select2 select has a value and we are on the visible canvas1, draw an image, else a simple circle.
         if (player && player.imgURL) {
             // Draw the image to the new newPosition
-            var imgURL = player.imgURL
+            var imgURL = player.imgURL + "?crossorigin"
             var imageObj = new Image();
 
             
