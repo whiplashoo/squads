@@ -82,12 +82,15 @@ function updateCanvas() {
     prepareCanvas();
 
     // Write the Title
-    ctx.fillStyle = "#444";
-    ctx.fillRect(0, 0, 180, 20);
-    ctx.font = "12px Fira Sans";
-    ctx.fillStyle = "#f0f600";
-    ctx.textAlign = "left";
-    ctx.fillText(currentTitle, 10, 15);
+    if (currentTitle !== '') {
+        ctx.fillStyle = "#444";
+        ctx.fillRect(0, 0, 200, 20);
+        ctx.font = "12px Fira Sans";
+        ctx.fillStyle = "#f0f600";
+        ctx.textAlign = "left";
+        ctx.fillText(currentTitle, 10, 15);
+    }
+    
 
     for (var i = 0; i < 11; i++) {
         var newPos = currentFormation[i];
