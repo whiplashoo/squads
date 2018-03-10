@@ -1,34 +1,68 @@
 extends layout
 
 block content
-  section.section.main
+  section.section.section-bg
     .container.is-fluid
       .columns
         .column.is-half
           .columns
             .column.is-half.image.example-img
-              img(src='/images/formation-example.png')
+              img(src='/images/formation-example.png', alt='squad formation example')
             .column.is-half.image.example-img
-              img(src='/images/barcelona.png') 
-        .column.has-text-centered.box
-          h1.title.is-2.is-spaced Create your own Football Formation
-          h2.subtitle.is-5 Choose your favorite players to form your squad
-          h2.subtitle.is-5 The only formation creator with photos of all players
-          a.button.main-button.is-large.is-primary(href='/create') Create Formation
-  section.section.main
+              img(src='/images/barcelona.png', alt='barcelona formation 2018') 
+        .column.has-text-centered
+          .tile.is-ancestor
+            .tile.is-vertical
+              .tile.is-parent
+                article.tile.is-child.notification
+                  h1.title.is-2.is-spaced Create your own Football Formation
+                  h2.subtitle.is-5 Choose your favorite players to form your squad
+              .tile
+                .tile.is-parent
+                  article.tile.is-child.notification.tile-bg
+                    p.title Build
+                    p.subtitle your team's starting eleven
+                    figure.image
+                      img(src='/images/blank-formation.png', alt='blank formation')
+                .tile.is-parent
+                  article.tile.is-child.notification.tile-bg
+                    p.title Photos
+                    p.subtitle of all football players
+                    figure.image
+                      img(src='https://s3.eu-west-2.amazonaws.com/players-whidev/10001.png', alt='player photo squad')
+                .tile.is-parent
+                  article.tile.is-child.notification.tile-bg
+                    p.title Free
+                    p.subtitle to use and share your squad
+                    figure.image
+                      img(src='/images/checked.png', alt='blank formation')
+              .tile.is-parent
+                article.tile.is-child.notification
+                  a.button.main-button.is-large.is-primary(href='/create') Create Formation
+  section.section.section-bg
     .container.is-fluid
       .columns
-        .column.has-text-centered.box
-          h1.title.is-2.is-spaced Download your squad for free and share it with your friends
-          h2.subtitle.is-5 Choose your favorite players to form your squad
-          h2.subtitle.is-5 The only formation creator with photos of all players
-          a.button.main-button.is-large.is-primary(href='/create') Create Formation
+        .column.has-text-centered
+          .tile.is-ancestor
+            .tile.is-vertical
+              .tile.is-parent
+                article.tile.is-child.notification
+                  h1.title.is-2.is-spaced The only formation creator with photos of all players
+                  h2.subtitle.is-5 Download your squad and share it with your friends
+              .tile.is-parent
+                article.tile.is-child.notification
+                  ul
+                    li Easily create your own football team in our soccer tactics and formations tool.
+                    li Use it to show what is your current favourite lineup or who you want to play on the next match.
+              .tile.is-parent
+                article.tile.is-child.notification
+                  a.button.main-button.is-large.is-primary(href='/create') Create Formation
         .column.is-half
           .columns
             .column.is-half.image.example-img
-              img(src='/images/formation-example.png')
+              img(src='/images/france-lineup-mundial-2018.png', alt='France lineup world cup 2018')
             .column.is-half.image.example-img
-              img(src='/images/barcelona.png') 
+              img(src='/images/england-lineup-mundial-2018.png', alt='England lineup world cup 2018') 
           
         
                   
