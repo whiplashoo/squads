@@ -1,0 +1,154 @@
+extends layout
+
+block content
+  section.section.main
+    .container.is-fluid
+      .columns.is-desktop.is-5
+        .column.is-narrow
+          canvas#canvas1(width='500', height='700')
+          canvas#cleanCanvas(width='500', height='700', style='display:none')
+        .column
+          .level
+            .level-item
+              .field.is-horizontal
+                .field-label
+                  label.label Formation:
+                .field-body
+                  .select
+                    select#formationSelect
+                      option(value='3412') 3-4-1-2
+                      option(value='3421') 3-4-2-1
+                      option(value='343') 3-4-3
+                      option(value='352') 3-5-2
+                      option(value='41212a') 4-1-2-1-2 (a)
+                      option(value='41212b') 4-1-2-1-2 (b)
+                      option(value='4141') 4-1-4-1
+                      option(value='4222') 4-2-2-2
+                      option(value='4231a') 4-2-3-1 (a)
+                      option(value='4231b') 4-2-3-1 (b)
+                      option(value='4312') 4-3-1-2
+                      option(value='4321', selected='') 4-3-2-1
+                      option(value='433a') 4-3-3 (a)
+                      option(value='433b') 4-3-3 (b)
+                      option(value='433c') 4-3-3 (c)
+                      option(value='433d') 4-3-3 (d)
+                      option(value='433e') 4-3-3 (e)
+                      option(value='4411') 4-4-1-1
+                      option(value='442a') 4-4-2 (a)
+                      option(value='442b') 4-4-2 (b)
+                      option(value='451a') 4-5-1 (a)
+                      option(value='451b') 4-5-1 (b)
+                      option(value='5212') 5-2-1-2
+                      option(value='5221') 5-2-2-1
+                      option(value='532') 5-3-2
+            .level-item
+              .field.is-horizontal
+                .field-label
+                  label.label Title:
+                .field-body
+                  input.input#formation-title(type='text')
+            .level-item
+              a.button.is-primary.is-rounded#download Download Image
+          .tool
+            .columns.is-mobile.tool-headings
+              .column.is-1
+                span.tool-heading Position
+              .column.is-6
+                span.tool-heading Search
+              .column.is-4
+                span.tool-heading Player Name
+              .column.is-1
+                span.tool-heading Remove
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+            .columns.is-mobile.position
+              .column.is-1
+                span.position-label
+              .column.is-6.search-level
+                select.search-entity(placeholder='', style='width:100%')
+              .column.is-4.search-selected
+              .column.is-1
+                a.delete.is-medium.remove-player
+  script(src='/javascripts/navbar.js')
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src='/javascripts/select2.min.js')
+  script(src='/javascripts/formations.js')
+  script(src='/javascripts/main.js')

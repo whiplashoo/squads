@@ -39,7 +39,6 @@ app.use('/', index);
 var Player = require('./models/player');
 
 app.get('/search/', function(req, res) {
-    console.log(req.query.q);
     var term = new RegExp(req.query.q.toLowerCase(), 'i');
     var query = Player.find({ plain_name: term });
     // Execute query in a callback and return players list

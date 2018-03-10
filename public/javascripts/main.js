@@ -82,10 +82,12 @@ function updateCanvas() {
     prepareCanvas();
 
     // Write the Title
-    ctx.font = "14px Fira Sans";
-    ctx.fillStyle = "white";
-    ctx.textAlign = "center";
-    ctx.fillText(currentTitle, 40, 40);
+    ctx.fillStyle = "#444";
+    ctx.fillRect(0, 0, 180, 20);
+    ctx.font = "12px Fira Sans";
+    ctx.fillStyle = "#f0f600";
+    ctx.textAlign = "left";
+    ctx.fillText(currentTitle, 10, 15);
 
     for (var i = 0; i < 11; i++) {
         var newPos = currentFormation[i];
@@ -233,7 +235,7 @@ function prepareCanvas() {
     ctx.font = "10px arial";
     ctx.fillStyle = "white";
     ctx.textAlign = "center";
-    ctx.fillText("Created with CreateFormation.com", 420, 695);
+    ctx.fillText("Created with CreateFormation.com", 410, 695);
 
     // -- START DRAWING THE POSITION CIRCLES --
     var selects = $(".search-entity");
@@ -308,28 +310,3 @@ $('#formation-title').change(function() {
 })
 
 
-document.addEventListener('DOMContentLoaded', function() {
-
-    // Get all "navbar-burger" elements
-    var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-    // Check if there are any navbar burgers
-    if ($navbarBurgers.length > 0) {
-
-        // Add a click event on each of them
-        $navbarBurgers.forEach(function($el) {
-            $el.addEventListener('click', function() {
-
-                // Get the target from the "data-target" attribute
-                var target = $el.dataset.target;
-                var $target = document.getElementById(target);
-
-                // Toggle the class on both the "navbar-burger" and the "navbar-menu"
-                $el.classList.toggle('is-active');
-                $target.classList.toggle('is-active');
-
-            });
-        });
-    }
-
-});
