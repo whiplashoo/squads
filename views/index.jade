@@ -5,7 +5,7 @@ block content
     .container.is-fluid
       .columns
         .column.is-half
-          .columns
+          .columns.is-mobile
             .column.is-half.image.example-img
               img(src='/images/formation-example.png', alt='squad formation example')
             .column.is-half.image.example-img
@@ -17,7 +17,7 @@ block content
                 article.tile.is-child.notification
                   h1.title.is-2.is-spaced Create your own Football Formation
                   h2.subtitle.is-5 Choose your favorite players to form your squad
-              .tile
+              .tile.is-flex-mobile 
                 .tile.is-parent
                   article.tile.is-child.notification.tile-bg
                     p.title Build
@@ -58,7 +58,7 @@ block content
                 article.tile.is-child.notification
                   a.button.main-button.is-large.is-primary(href='/create') Create Formation
         .column.is-half
-          .columns
+          .columns.is-mobile
             .column.is-half.image.example-img
               img(src='/images/france-lineup-mundial-2018.png', alt='France lineup world cup 2018')
             .column.is-half.image.example-img
