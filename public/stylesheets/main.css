@@ -13,6 +13,17 @@ html {
 .box {
     box-shadow: none;
 }
+
+.beta {
+    font-size: 75%;
+    font-weight: 700;
+    background-color: #ca2626;
+    padding: 0px 3px 0px;
+    border-radius: 5px;
+    margin-left: 2px;
+    margin-top: -15px;
+}
+
 .position-label {
     padding: 5px;
     border-radius: 5px;
