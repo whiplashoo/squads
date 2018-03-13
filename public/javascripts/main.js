@@ -301,7 +301,20 @@ $(".remove-player").on("click", function() {
 });
 
 $("#download").on("click", function() {
-    this.href = document.getElementById("canvas1").toDataURL();
+    var canvas = document.getElementById("canvas1");
+    var ctx = canvas.getContext("2d");
+
+    var finalCanvas = document.getElementById("finalCanvas");
+    var fctx = finalCanvas.getContext("2d");
+    fctx.clearRect(0, 0, finalCanvas.width, finalCanvas.height);
+    fctx.resetTransform();
+    fctx.webkitImageSmoothingEnabled = false;
+    fctx.mozImageSmoothingEnabled = false;
+    fctx.imageSmoothingEnabled = false;
+    fctx.scale(2, 2);
+    fctx.drawImage(canvas, 0, 0);
+
+    this.href = finalCanvas.toDataURL();
     var d = new Date();
     var dateString = d.toLocaleString().replace(/[^\w\s]/gi, '_');
     this.download = currentTitle || "formation_" + dateString;
