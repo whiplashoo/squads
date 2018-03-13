@@ -3,10 +3,10 @@ extends layout
 block content
   section.section.main
     .container.is-fluid
-      .columns.is-desktop.is-5
-        .column.is-narrow
+      .columns.is-desktop
+        .column.is-narrow.is-5#canvas-container
           canvas#canvas1(width='500', height='700')
-          canvas#cleanCanvas(width='500', height='700', style='display:none')
+          canvas#finalCanvas(width='1000', height='1400')
         .column
           .level
             .level-item
@@ -55,97 +55,97 @@ block content
                 span.tool-heading Position
               .column.is-6
                 span.tool-heading Search
-              .column.is-4
+              .column.is-4-tablet.is-3-mobile
                 span.tool-heading Player Name
-              .column.is-1
+              .column.is-1-tablet.is-2-mobile
                 span.tool-heading Remove
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
             .columns.is-mobile.position
               .column.is-1
                 span.position-label
               .column.is-6.search-level
                 select.search-entity(placeholder='', style='width:100%')
-              .column.is-4.search-selected
-              .column.is-1
+              .column.is-4-tablet.is-3-mobile.search-selected
+              .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
   script(src='https://code.jquery.com/jquery-3.2.1.min.js')
   script(src='/javascripts/select2.min.js')
