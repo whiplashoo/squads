@@ -15,13 +15,5 @@ var PlayerSchema = new Schema(
   }
 );
 
-// Virtual for author's full name
-PlayerSchema
-.virtual('test')
-.get(function () {
-  return this.test;
-});
-
-
 //Export model
 module.exports = mongoose.model('Player', PlayerSchema);
