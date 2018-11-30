@@ -11,7 +11,8 @@ var PlayerSchema = new Schema(
     url: {type: String, required: true, max: 200},
     s3url: {type: String, required: true, max: 200},
     age: {type: Number, required: true, max: 100},
-    rating: {type: Number, required: true, max: 100}
+    rating: {type: Number, required: true, max: 100},
+    cluburl: {type: String, required: true, max: 200}
   }
 );
 

@@ -61,5 +61,11 @@ COMMANDS.txt
 mydump.csv
 replaceaccented.js
 populatedb.js
-
+updateclubs.js
+Missing/
+PicsFinal/
+*.txt
+*.key
+*.py
+*.csv
 to_upload/
