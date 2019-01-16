@@ -61,6 +61,7 @@ COMMANDS.txt
 mydump.csv
 replaceaccented.js
 populatedb.js
+populatedbSingle.js
 updateclubs.js
 Missing/
 PicsFinal/
@@ -68,4 +69,5 @@ PicsFinal/
 *.key
 *.py
 *.csv
-to_upload/
+PicsToUpload/
+squadsvenv/

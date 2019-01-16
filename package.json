@@ -22,6 +22,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
-    "nodemon": "^1.15.1"
+    "nodemon": "^1.15.1",
+    "remove-accents": "^0.4.2"
   }
 }
