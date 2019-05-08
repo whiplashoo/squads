@@ -106,3 +106,73 @@ section.main {
     margin: 0 auto;
     display: block;
 }
+
+.footer {
+    background-color: #363636;
+    padding: 1.5rem 1.5rem 4rem;
+}
+
+.wrapper ul {
+  list-style: none;
+}
+
+.wrapper ul li {
+    width: 40px;
+    height: 40px;
+    line-height: 35px;
+    margin: 0 10px;
+    text-align: center;
+    border-radius: 50%;
+    border: 5px solid #D8E2DC;
+    float: right;
+    transition: all 0.5s ease;
+}
+
+.wrapper ul li .fa {
+    color: #D8E2DC;
+    transition: all 0.5s ease;
+    font-size: 1.25em;
+}
+
+.wrapper ul li:hover.facebook {
+  border: 5px solid #3b5998;
+  box-shadow: 0 0 15px #3b5998;
+  transition: all 0.5s ease;
+}
+
+.wrapper ul li:hover .fa-facebook {
+  color: #3b5998;
+  text-shadow: 0 0 15px #3b5998;
+  transition: all 0.5s ease;
+}
+
+.wrapper ul li:hover.instagram {
+  border: 5px solid #bc2a8d;
+  box-shadow: 0 0 15px #bc2a8d;
+  transition: all 0.5s ease;
+}
+
+.wrapper ul li:hover .fa-instagram {
+  color: #bc2a8d;
+  text-shadow: 0 0 15px #bc2a8d;
+  transition: all 0.5s ease;
+}
+
+@media screen and (max-width: 640px){
+  .wrapper {
+      width: 350px;
+  }
+  .wrapper ul li{
+      margin-top: 10px;
+  }
+}
+
+
+@media screen and (max-width: 340px){
+  .wrapper {
+      width: 150px;
+  }
+  .wrapper ul li{
+      margin:15px;
+  }
+}
