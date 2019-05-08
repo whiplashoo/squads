@@ -78,9 +78,11 @@ app.get('/search/', function(req, res) {
 });
 
 app.post('/send_email/', function(req, res) {
-    var name = req.body.name
-    var email = req.body.email
-    var message = req.body.message
+    var name = req.body.name;
+    var email = req.body.email;
+    var message = req.body.message;
+
+     console.log(req.body);
 
     var helper = require('sendgrid').mail;
     var from_email = new helper.Email(email);
@@ -97,12 +99,15 @@ app.post('/send_email/', function(req, res) {
   });
 
     sg.API(request, function(error, response) {
+        if (error) {
+            console.log(error);
+          }
       console.log(response.statusCode);
       console.log(response.body);
       console.log(response.headers);
   });
 
-    console.log(req.body);
+   
 });
 
 // catch 404 and forward to error handler
