@@ -88,7 +88,7 @@ if(process.env.NODE_ENV === 'production'){
 
 
 var transporter = nodeMailer.createTransport({
-  service: 'Sendgrid',
+  service: 'SendGrid',
   auth: {
     user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
   }
