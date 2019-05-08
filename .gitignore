@@ -71,3 +71,4 @@ PicsFinal/
 *.csv
 PicsToUpload/
 squadsvenv/
+config.json

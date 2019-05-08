@@ -6,6 +6,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var compression = require('compression');
 var helmet = require('helmet');
+var nodeMailer = require('nodemailer');
 
 var index = require('./routes/index');
 var http = require('http');
@@ -77,87 +78,45 @@ app.get('/search/', function(req, res) {
     });
 });
 
+var auth;
+
+if(process.env.NODE_ENV === 'production'){
+    auth = process.env;
+} else {
+    auth = require('./config.json');
+}
+
+
+var transporter = nodeMailer.createTransport({
+  service: 'Sendgrid',
+  auth: {
+    user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
+  }
+});
+
 app.post('/send_email/', function(req, res) {
     var name = req.body.name;
     var email = req.body.email;
     var message = req.body.message;
 
-    console.log(req.body);
-
-    console.log("1");
-
-    var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-    var request = sg.emptyRequest({
-      method: 'POST',
-      path: '/v3/mail/send',
-      body: {
-        personalizations: [
-        {
-            to: [
-            {
-                email: 'whiplashoo721@gmail.com',
-            },
-            ],
-            subject: 'Hello World from the SendGrid Node.js Library!',
-        },
-        ],
-        from: {
-          email: email,
-      },
-      content: [
-      {
-        type: 'text/plain',
-        value: message,
-    },
-    ],
-},
-});
-
-    console.log("2");
-
-//With promise
-sg.API(request)
-.then(response => {
-    console.log("3");
-    console.log(response.statusCode);
-    console.log(response.body);
-    console.log(response.headers);
-})
-.catch(error => {
-    //error is an instance of SendGridError
-    //The full response is attached to error.response
-    console.log("4");
-    console.log(error.response.statusCode);
-    console.log(error);
-});
-
-console.log("5");
-
-
-
-  //   var helper = require('sendgrid').mail;
-  //   var from_email = new helper.Email(email);
-  //   var to_email = new helper.Email("whiplashoo721@gmail.com");
-  //   var subject = 'Hello World from the SendGrid Node.js Library!';
-  //   var content = new helper.Content('text/plain', message);
-  //   var mail = new helper.Mail(from_email, subject, to_email, content);
-
-  //   var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-  //   var request = sg.emptyRequest({
-  //     method: 'POST',
-  //     path: '/v3/mail/send',
-  //     body: mail.toJSON(),
-  // });
-
-  //   sg.API(request, function(error, response) {
-  //       if (error) {
-  //           console.log(error);
-  //         }
-  //     console.log(response.statusCode);
-  //     console.log(response.body);
-  //     console.log(response.headers);
-  // });
-
+    //Those ${} things that you see are called template literals
+    //They are a way of inserting variables inside strings
+    transporter.sendMail({
+        from: email,
+        to: "whiplashoo721@gmail.com",
+        subject: `Message from ${name}` ,
+        html: `<h4>${message}</h4>`
+        }, (err, info)=>{
+            if(err){
+                res.send(err);
+            }
+            else{
+                res.status(200).json({
+                success: true,
+                message: 'Email Sent'
+                });
+            }
+        });
 
 });
 
