@@ -84,6 +84,8 @@ app.post('/send_email/', function(req, res) {
 
     console.log(req.body);
 
+    console.log("1");
+
     var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
     var request = sg.emptyRequest({
       method: 'POST',
@@ -111,9 +113,12 @@ app.post('/send_email/', function(req, res) {
 },
 });
 
+    console.log("2");
+
 //With promise
 sg.API(request)
 .then(response => {
+    console.log("3");
     console.log(response.statusCode);
     console.log(response.body);
     console.log(response.headers);
@@ -121,9 +126,12 @@ sg.API(request)
 .catch(error => {
     //error is an instance of SendGridError
     //The full response is attached to error.response
+    console.log("4");
     console.log(error.response.statusCode);
     console.log(error);
 });
+
+console.log("5");
 
 
 
