@@ -99,10 +99,8 @@ app.post('/send_email/', function(req, res) {
     var email = req.body.email;
     var message = req.body.message;
 
-    //Those ${} things that you see are called template literals
-    //They are a way of inserting variables inside strings
     transporter.sendMail({
-        from: email,
+        from: "contact@createformation.com",
         to: "whiplashoo721@gmail.com",
         subject: `Message from ${name}` ,
         html: `<h4>${message}</h4>`
@@ -111,6 +109,7 @@ app.post('/send_email/', function(req, res) {
                 res.send(err);
             }
             else{
+                console.log(res);
                 res.status(200).json({
                 success: true,
                 message: 'Email Sent'
