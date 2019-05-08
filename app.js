@@ -53,7 +53,7 @@ app.get('/search/', function(req, res) {
     query.exec(function(err, players) {
         if (!err) {
             // Construct the json result set
-           	var result = [];
+            var result = [];
             for (var i = 0; i < players.length; i++) {
             	var p = players[i];
             	result.push({
@@ -75,6 +75,34 @@ app.get('/search/', function(req, res) {
             }, 404);
         }
     });
+});
+
+app.post('/send_email/', function(req, res) {
+    var name = req.body.name
+    var email = req.body.email
+    var message = req.body.message
+
+    var helper = require('sendgrid').mail;
+    var from_email = new helper.Email(email);
+    var to_email = new helper.Email("whiplashoo721@gmail.com");
+    var subject = 'Hello World from the SendGrid Node.js Library!';
+    var content = new helper.Content('text/plain', message);
+    var mail = new helper.Mail(from_email, subject, to_email, content);
+
+    var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    var request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+  });
+
+    sg.API(request, function(error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+  });
+
+    console.log(req.body);
 });
 
 // catch 404 and forward to error handler

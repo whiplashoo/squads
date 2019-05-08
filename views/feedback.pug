@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  section.section.main
+    .container.is-fluid
+      .columns.is-desktop
+        .column
+          .form-wrapper
+            form#contact.form(name='contact', method='post')
+              .form-group
+                label(for='name') Name 
+                input#name.form-control(type='text', name='name', value='', placeholder='Name', required='')
+              .form-group
+                label(for='email') Email
+                input#email.form-control(type='email', name='email', placeholder='Email', required='')
+              .form-group
+                label(for='exampleInputFile') Message
+                textarea#message.form-control(name='message', required='', rows='8', placeholder='Drop me a line...')
+              button#submit.btn.btn-new.btn-block.btn-newE(type='submit') Submit
+        .column
+  script(src='https://code.jquery.com/jquery-3.2.1.min.js')
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js')
+  script(src='https://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js')
+  script(src='/javascripts/feedback.js')
