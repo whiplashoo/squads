@@ -112,8 +112,7 @@ app.get('/api/player/p/:playerS3Url', function(req, res) {
 //     user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
 // }
 // });
-var helper = require('sendgrid').mail;
-var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+
 app.post('/send_email/', function(req, res) {
     // var name = req.body.name;
     // var email = req.body.email;
@@ -139,7 +138,9 @@ app.post('/send_email/', function(req, res) {
     //         }
     //     });
 
-
+var helper = require('sendgrid').mail;
+var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+console.log(sg);
     var from_email = new helper.Email('test@example.com');
     var to_email = new helper.Email('whiplashoo721@gmail.com');
     var subject = 'Hello World from the SendGrid Node.js Library!';
@@ -153,11 +154,11 @@ app.post('/send_email/', function(req, res) {
       body: mail.toJSON(),
   });
 
-  //   sg.API(request, function(error, response) {
-  //     console.log(response.statusCode);
-  //     console.log(response.body);
-  //     console.log(response.headers);
-  // });
+    sg.API(request, function(error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+  });
 
 });
 
