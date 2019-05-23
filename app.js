@@ -97,81 +97,48 @@ app.get('/api/player/p/:playerS3Url', function(req, res) {
     
 });
 
-// var auth;
-
-// if(process.env.NODE_ENV === 'production'){
-//     auth = process.env;
-// } else {
-//     auth = require('./config.json');
-// }
-
-
-// var transporter = nodeMailer.createTransport({
-//   service: 'SendGrid',
-//   auth: {
-//     user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
-// }
-// });
-
 app.post('/send_email/', function(req, res) {
-    // var name = req.body.name;
-    // var email = req.body.email;
-    // var message = req.body.message;
+    var name = req.body.name;
+    var email = req.body.email;
+    var message = req.body.message;
 
-    // console.log("AUTH IS:::::::" + auth);
-
-    // transporter.sendMail({
-    //     from: "contact@createformation.com",
-    //     to: 'whiplashoo721@gmail.com',
-    //     subject: `Message from ${name}` ,
-    //     html: `<h4>${message}</h4>`
-    //     }, (err, info)=>{
-    //         if(err){
-    //             res.send(err);
-    //         }
-    //         else{
-    //             console.log(res);
-    //             res.status(200).json({
-    //             success: true,
-    //             message: 'Email Sent'
-    //             });
-    //         }
-    //     });
-
-var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-var request = sg.emptyRequest({
-  method: 'POST',
-  path: '/v3/mail/send',
-  body: {
-    personalizations: [
-      {
-        to: [
-          {
-            email: 'whiplashoo721@gmail.com',
-          },
+    var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    var request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: {
+        personalizations: [
+        {
+            to: [
+            {
+                email: process.env.CONTACT_EMAIL,
+            },
+            ],
+            subject: 'New CreateFormation Message from:' + name,
+        },
         ],
-        subject: 'Hello World from the SendGrid Node.js Library!',
+        from: {
+          email: 'contact@createformation.com',
       },
-    ],
-    from: {
-      email: 'test@example.com',
-    },
-    content: [
+      reply_to: {
+          email: email,
+      },
+      content: [
       {
         type: 'text/plain',
-        value: 'Hello, Email!',
-      },
+        value: message,
+    },
     ],
-  },
+},
 });
 
-sg.API(request, function(error, response) {
-  if (error) {
-    console.log('Error response received');
-  }
-  console.log("STATUS CODE:" + response.statusCode);
-  console.log("RESPONSE BODY:" + response.body);
-  console.log("RESPONSE HEADERS:" + response.headers);
+    sg.API(request, function(error, response) {
+      if (error) {
+        console.log('Error response received');
+    }
+    console.log("STATUS CODE:" + response.statusCode);
+    console.log("RESPONSE BODY:" + response.body);
+    console.log("RESPONSE HEADERS:" + response.headers);
 });
 
 });
