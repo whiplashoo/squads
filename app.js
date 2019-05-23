@@ -165,20 +165,14 @@ var request = sg.emptyRequest({
   },
 });
 
-//With promise
-sg.API(request)
-  .then(response => {
-    console.log(response.statusCode);
-    console.log(response.body);
-    console.log(response.headers);
-  })
-  .catch(error => {
-    //error is an instance of SendGridError
-    //The full response is attached to error.response
-    console.log(error.response.statusCode);
-    console.log(error.response);
-    console.log(error);
-  });
+sg.API(request, function(error, response) {
+  if (error) {
+    console.log('Error response received');
+  }
+  console.log("STATUS CODE:" + response.statusCode);
+  console.log("RESPONSE BODY:" + response.body);
+  console.log("RESPONSE HEADERS:" + response.headers);
+});
 
 });
 
