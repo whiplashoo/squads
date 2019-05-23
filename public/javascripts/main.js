@@ -1,5 +1,4 @@
 var currentData = {};
-var currentTitle = "";
 
 $(document).ready(function() {
 
@@ -32,7 +31,7 @@ $(document).ready(function() {
 
         var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + selected.s3url + ".png";
 
-        currentData[id] = { "imgURL": imgURL, "name": selected.text };
+        currentData[id] = { "imgURL": imgURL, "name": selected.text, "s3url": selected.s3url };
 
         updateCanvas();
 
@@ -53,6 +52,27 @@ $(document).ready(function() {
         updateCanvas();
     });
 });
+
+function loadPlayer(s3url, id) {
+    // Fetch the preselected item, and add to the control
+    var playerSelect = $('.search-entity[data-id="' + id + '"]');
+    $.ajax({
+        type: 'GET',
+        url: '/api/player/p/' + s3url
+    }).then(function (data) {
+
+        var option = new Option(data.name, data.id, true, true);
+        playerSelect.append(option).trigger('change');
+
+        var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + s3url + ".png";
+
+        currentData[id] = { "name": data.name, "imgURL": imgURL, "s3url": s3url };
+
+        playerSelect.parent().siblings('.search-selected').html(data.name);
+
+        updateCanvas();
+    });
+}
 
 function optionData(data, container) {
     $(data.element).attr("data-s3url", data.s3url);
@@ -80,17 +100,6 @@ function updateCanvas() {
     // Reset Canvas.
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     prepareCanvas();
-
-    // Write the Title
-    if (currentTitle !== '') {
-        ctx.fillStyle = "#444";
-        ctx.fillRect(0, 0, 200, 20);
-        ctx.font = "12px Fira Sans";
-        ctx.fillStyle = "#f0f600";
-        ctx.textAlign = "left";
-        ctx.fillText(currentTitle, 10, 15);
-    }
-    
 
     for (var i = 0; i < 11; i++) {
         var newPos = currentFormation[i];
@@ -130,6 +139,23 @@ function updateCanvas() {
         sel.setAttribute("data-cy", destY);
         $(positions[i]).css("background-color", circleColors[posName]).html(posName);
     }
+}
+
+function updateTitle(newTitle) {
+    var canvas = document.getElementById("canvas1");
+    var ctx = canvas.getContext("2d");
+    // Write the Title
+    if (newTitle !== '') {
+        ctx.fillStyle = "#444";
+        ctx.fillRect(0, 0, 200, 20);
+        ctx.font = "12px Fira Sans";
+        ctx.fillStyle = "#f0f600";
+        ctx.textAlign = "left";
+        ctx.fillText(newTitle, 10, 15);
+    } else {
+        updateCanvas();
+    }
+
 }
 
 var drawCanvasImage = function(canvas, ctx, imageObj, destX, destY) {
@@ -300,6 +326,34 @@ $(".remove-player").on("click", function() {
     $positionDiv.find('.search-selected').html("");
 });
 
+function saveConfig() {
+    let saveData = { title: $('#formation-title').val(), formation: $("#formationSelect").val() };
+    for (let p in currentData) {
+        let player = currentData[p];
+        saveData[p] = {name: player.name, id: player.s3url};
+    }
+    return JSON.stringify(saveData);
+}
+
+$('#loadFormation').on("click",function() {
+    for (let i=0; i<5; i++) {
+        loadPlayer("10000", i);
+    }
+
+});
+
+$('#saveFormation').on("click",function() {
+    let save = saveConfig();
+    this.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent(save);
+    let fileName = "createFormation__" + $('#formation-title').val().substring(0,32);
+    this.download = fileName.replace(/[^\w]/gi, "_") + ".txt";
+});
+
+$('.toggleModal').on("click",function(){
+    $('.modal').toggleClass('is-active');
+    $('html').toggleClass('is-clipped');
+});
+
 $("#download").on("click", function() {
     var canvas = document.getElementById("canvas1");
     var ctx = canvas.getContext("2d");
@@ -317,12 +371,11 @@ $("#download").on("click", function() {
     this.href = finalCanvas.toDataURL();
     var d = new Date();
     var dateString = d.toLocaleString().replace(/[^\w\s]/gi, '_');
-    this.download = currentTitle || "formation_" + dateString;
+    this.download = $('#formation-title').val() || "formation_" + dateString;
 });
 
 $('#formation-title').change(function() {
-    currentTitle = $(this).val();
-    updateCanvas();
+    updateTitle($(this).val());
 })
 
 

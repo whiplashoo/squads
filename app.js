@@ -78,6 +78,25 @@ app.get('/search/', function(req, res) {
     });
 });
 
+app.get('/api/player/p/:playerS3Url', function(req, res) {
+    var term = req.params.playerS3Url;
+    console.log(term);
+
+    Player.findOne({ s3url: term }, function(err, player) {
+        if (!err) {
+            console.log(player);
+            res.send(player, {
+                'Content-Type': 'application/json'
+            }, 200);
+        } else {
+            res.send(JSON.stringify(err), {
+                'Content-Type': 'application/json'
+            }, 404);
+        }
+    })
+    
+});
+
 var auth;
 
 if(process.env.NODE_ENV === 'production'){
@@ -101,7 +120,7 @@ app.post('/send_email/', function(req, res) {
 
     transporter.sendMail({
         from: "contact@createformation.com",
-        to: "whiplashoo721@gmail.com",
+        to: process.env.CONTACT_EMAIL,
         subject: `Message from ${name}` ,
         html: `<h4>${message}</h4>`
         }, (err, info)=>{
