@@ -118,6 +118,8 @@ app.post('/send_email/', function(req, res) {
     var email = req.body.email;
     var message = req.body.message;
 
+    console.log(process.env.CONTACT_EMAIL);
+
     transporter.sendMail({
         from: "contact@createformation.com",
         to: process.env.CONTACT_EMAIL,
