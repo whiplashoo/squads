@@ -122,7 +122,7 @@ app.post('/send_email/', function(req, res) {
 
     transporter.sendMail({
         from: "contact@createformation.com",
-        to: process.env.CONTACT_EMAIL,
+        to: 'whiplashoo721@gmail.com',
         subject: `Message from ${name}` ,
         html: `<h4>${message}</h4>`
         }, (err, info)=>{
