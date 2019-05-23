@@ -147,6 +147,33 @@ block content
               .column.is-4-tablet.is-3-mobile.search-selected
               .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
+          .level
+            .level-item
+              a.button.is-info.is-rounded.toggleModal Save/Load Formation Data
+  .modal
+    .modal-background
+    .modal-card
+      header.modal-card-head
+        p.modal-card-title.has-text-centered Save/Load Formation Data
+        button.delete.toggleModal(aria-label='close')
+      section.modal-card-body
+        // Content ...
+        .columns
+          .column
+            h3  Save Current Data
+            p In order to save the current formation (players, formation and title), click the button below to download a small #[span.has-text-weight-bold createFormation.txt] file containing all the necessary data.
+            .has-text-centered
+              a.button.is-info.is-rounded#saveFormation Save Formation Data
+          .column
+            h3  Load Data
+            p When you are ready to continue your work, copy and paste below the content of the #[span.has-text-weight-bold createFormation.txt] file you previously downloaded. 
+            i WARNING! The current formation will be cleared of all data.
+            textarea.textarea#formationDataHolder(cols='40', rows='10')
+            .has-text-centered
+              a.button.is-info.is-rounded#loadFormation Load Formation Data
+      footer.modal-card-foot
+        .has-text-right
+          a.button.toggleModal Cancel
   script(src='https://code.jquery.com/jquery-3.2.1.min.js')
   script(src='/javascripts/select2.min.js')
   script(src='/javascripts/formations.js')

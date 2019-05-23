@@ -176,3 +176,9 @@ section.main {
       margin:15px;
   }
 }
+
+.modal-card-body h3 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.25rem;
+}
