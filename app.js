@@ -97,46 +97,66 @@ app.get('/api/player/p/:playerS3Url', function(req, res) {
     
 });
 
-var auth;
+// var auth;
 
-if(process.env.NODE_ENV === 'production'){
-    auth = process.env;
-} else {
-    auth = require('./config.json');
-}
+// if(process.env.NODE_ENV === 'production'){
+//     auth = process.env;
+// } else {
+//     auth = require('./config.json');
+// }
 
 
-var transporter = nodeMailer.createTransport({
-  service: 'SendGrid',
-  auth: {
-    user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
-  }
-});
+// var transporter = nodeMailer.createTransport({
+//   service: 'SendGrid',
+//   auth: {
+//     user: auth.SENDGRID_USERNAME, pass: auth.SENDGRID_PASSWORD
+// }
+// });
 
 app.post('/send_email/', function(req, res) {
-    var name = req.body.name;
-    var email = req.body.email;
-    var message = req.body.message;
+    // var name = req.body.name;
+    // var email = req.body.email;
+    // var message = req.body.message;
 
-    console.log(process.env.CONTACT_EMAIL);
+    // console.log("AUTH IS:::::::" + auth);
 
-    transporter.sendMail({
-        from: "contact@createformation.com",
-        to: 'whiplashoo721@gmail.com',
-        subject: `Message from ${name}` ,
-        html: `<h4>${message}</h4>`
-        }, (err, info)=>{
-            if(err){
-                res.send(err);
-            }
-            else{
-                console.log(res);
-                res.status(200).json({
-                success: true,
-                message: 'Email Sent'
-                });
-            }
-        });
+    // transporter.sendMail({
+    //     from: "contact@createformation.com",
+    //     to: 'whiplashoo721@gmail.com',
+    //     subject: `Message from ${name}` ,
+    //     html: `<h4>${message}</h4>`
+    //     }, (err, info)=>{
+    //         if(err){
+    //             res.send(err);
+    //         }
+    //         else{
+    //             console.log(res);
+    //             res.status(200).json({
+    //             success: true,
+    //             message: 'Email Sent'
+    //             });
+    //         }
+    //     });
+
+    var helper = require('sendgrid').mail;
+    var from_email = new helper.Email('test@example.com');
+    var to_email = new helper.Email('whiplashoo721@gmail.com');
+    var subject = 'Hello World from the SendGrid Node.js Library!';
+    var content = new helper.Content('text/plain', 'Hello, Email!');
+    var mail = new helper.Mail(from_email, subject, to_email, content);
+
+    var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
+    var request = sg.emptyRequest({
+      method: 'POST',
+      path: '/v3/mail/send',
+      body: mail.toJSON(),
+  });
+
+    sg.API(request, function(error, response) {
+      console.log(response.statusCode);
+      console.log(response.body);
+      console.log(response.headers);
+  });
 
 });
 
