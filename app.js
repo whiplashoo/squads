@@ -138,26 +138,46 @@ app.post('/send_email/', function(req, res) {
     //         }
     //     });
 
-var helper = require('sendgrid').mail;
 var sg = require('sendgrid')(process.env.SENDGRID_API_KEY);
-console.log(sg);
-    var from_email = new helper.Email('test@example.com');
-    var to_email = new helper.Email('whiplashoo721@gmail.com');
-    var subject = 'Hello World from the SendGrid Node.js Library!';
-    var content = new helper.Content('text/plain', 'Hello, Email!');
-    var mail = new helper.Mail(from_email, subject, to_email, content);
+var request = sg.emptyRequest({
+  method: 'POST',
+  path: '/v3/mail/send',
+  body: {
+    personalizations: [
+      {
+        to: [
+          {
+            email: 'whiplashoo721@gmail.com',
+          },
+        ],
+        subject: 'Hello World from the SendGrid Node.js Library!',
+      },
+    ],
+    from: {
+      email: 'test@example.com',
+    },
+    content: [
+      {
+        type: 'text/plain',
+        value: 'Hello, Email!',
+      },
+    ],
+  },
+});
 
-
-    var request = sg.emptyRequest({
-      method: 'POST',
-      path: '/v3/mail/send',
-      body: mail.toJSON(),
-  });
-
-    sg.API(request, function(error, response) {
-      console.log(response.statusCode);
-      console.log(response.body);
-      console.log(response.headers);
+//With promise
+sg.API(request)
+  .then(response => {
+    console.log(response.statusCode);
+    console.log(response.body);
+    console.log(response.headers);
+  })
+  .catch(error => {
+    //error is an instance of SendGridError
+    //The full response is attached to error.response
+    console.log(error.response.statusCode);
+    console.log(error.response);
+    console.log(error);
   });
 
 });
