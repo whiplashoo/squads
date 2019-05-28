@@ -115,6 +115,7 @@ app.post('/send_email/', function(req, res) {
   });
 
     sg.API(request, function(error, response) {
+        res.send(200);
       console.log(response.statusCode);
       console.log(response.body);
       console.log(response.headers);
