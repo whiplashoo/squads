@@ -80,11 +80,9 @@ app.get('/search/', function(req, res) {
 
 app.get('/api/player/p/:playerS3Url', function(req, res) {
     var term = req.params.playerS3Url;
-    console.log(term);
 
     Player.findOne({ s3url: term }, function(err, player) {
         if (!err) {
-            console.log(player);
             res.send(player, {
                 'Content-Type': 'application/json'
             }, 200);

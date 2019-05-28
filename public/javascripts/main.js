@@ -324,8 +324,13 @@ $(".remove-player").on("click", function() {
     updateCanvas();
 
     $positionDiv.find('.search-selected').html("");
+    $positionDiv.find('.search-entity').val("").trigger("change");
 });
 
+
+/********************
+**  SAVE/LOAD CONFIG
+********************/
 function saveConfig() {
     let saveData = { title: $('#formation-title').val(), formation: $("#formationSelect").val() };
     for (let p in currentData) {
@@ -335,11 +340,27 @@ function saveConfig() {
     return JSON.stringify(saveData);
 }
 
-$('#loadFormation').on("click",function() {
-    for (let i=0; i<5; i++) {
-        loadPlayer("10000", i);
-    }
+function loadConfig(loadData) {
+    $('#formation-title').val(loadData.title).trigger("change");
+    $("#formationSelect").val(loadData.formation).trigger("change");
 
+    for (let i=0; i<11; i++) {
+        if (loadData[i]) {
+            let p = loadData[i];
+            loadPlayer(p.id, i);
+        }
+    }
+}
+
+
+/********************
+**  EVENT LISTENERS
+********************/
+$('#loadFormation').on("click",function() {
+    let loadData = JSON.parse($('#formationDataHolder').val());
+    loadConfig(loadData);
+    $('.modal').toggleClass('is-active');
+    $('html').toggleClass('is-clipped');
 });
 
 $('#saveFormation').on("click",function() {

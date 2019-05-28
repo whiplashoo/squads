@@ -35,10 +35,14 @@ html {
     font-weight: bold;
 }
 
-.button.is-primary {
-    font-weight: 700;
+.navbar .button.is-large {
+  font-weight: 700;
     font-size: 16px;
     letter-spacing: 1px;
+}
+
+.button.is-primary {
+    
 }
 .logo {
     margin-right: 10px;
@@ -181,4 +185,8 @@ section.main {
   text-align: center;
   font-weight: 700;
   font-size: 1.25rem;
+}
+
+fieldset {
+  border: none;
 }
