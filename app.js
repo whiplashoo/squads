@@ -102,7 +102,7 @@ app.post('/send_email/', function(req, res) {
 
     var helper = require('sendgrid').mail;
     var from_email = new helper.Email('contact@createformation.com');
-    var to_email = new helper.Email(email);
+    var to_email = new helper.Email(process.env.CONTACT_EMAIL);
     var subject = 'New CreateFormation Message from:' + name;
     var content = new helper.Content('text/plain', message);
     var mail = new helper.Mail(from_email, subject, to_email, content);
