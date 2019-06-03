@@ -14,7 +14,7 @@ var enforce = require('express-sslify');
 
 var app = express();
 
-//Set up mongoose connection
+//  Set up mongoose connection
 var mongoose = require('mongoose');
 var mongoDB = process.env.MONGODB_URI ;
 mongoose.connect(mongoDB);
