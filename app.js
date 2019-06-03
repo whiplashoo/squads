@@ -40,7 +40,7 @@ app.use(cookieParser());
 // });
 
 app.use('/ads.txt', function(req, res, next) {
-  res.sendFile('ads.txt', {root: 'public'});
+  res.sendFile(__dirname + "/public/" + "ads.txt");
 });
 
 app.use(compression()); //Compress all routes
