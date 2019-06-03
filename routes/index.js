@@ -16,7 +16,7 @@ router.get('/feedback', function(req, res, next) {
 });
 
 router.get('/ads.txt', function(req, res, next) {
-  res.sendFile('/public/ads.txt');
+  res.sendFile("ads.txt", {root: "public"});
 });
 
 
