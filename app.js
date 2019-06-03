@@ -39,6 +39,10 @@ app.use(cookieParser());
 //     console.log('Express server listening on port ' + app.get('port'));
 // });
 
+app.use('/ads.txt', function(req, res, next) {
+  res.sendFile('ads.txt');
+});
+
 app.use(compression()); //Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(helmet());

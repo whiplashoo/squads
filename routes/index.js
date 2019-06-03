@@ -15,9 +15,7 @@ router.get('/feedback', function(req, res, next) {
   res.render('feedback', { title: 'Feedback' });
 });
 
-router.get('/ads.txt', function(req, res, next) {
-  res.sendFile("ads.txt", {root: "public"});
-});
+
 
 
 module.exports = router;
