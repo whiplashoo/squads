@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var compression = require('compression');
 var helmet = require('helmet');
 var nodeMailer = require('nodemailer');
-var serveStatic = require('serve-static')
 
 var index = require('./routes/index');
 var http = require('http');
@@ -40,10 +39,9 @@ app.use(cookieParser());
 //     console.log('Express server listening on port ' + app.get('port'));
 // });
 
-app.use(serveStatic('public/ftp', { 'index': ['ads.txt'] }))
-// app.use('/ads.txt', function(req, res, next) {
-//   res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
-// });
+app.get('/ads.txt', function(req, res, next) {
+  res.redirect(301, 'https://mapchart.net/ads.txt');
+});
 
 app.use(compression()); //Compress all routes
 app.use(express.static(path.join(__dirname, 'public')));
