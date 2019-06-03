@@ -16,7 +16,7 @@ router.get('/feedback', function(req, res, next) {
 });
 
 router.get('/ads.txt', function(req, res, next) {
-  res.sendFile(path.join(__dirname, 'public', 'ads.txt'));
+  res.sendFile(path.join(__dirname, '../public', 'ads.txt'));
 });
 
 
