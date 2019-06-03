@@ -40,7 +40,7 @@ app.use(cookieParser());
 // });
 
 app.get('/ads.txt', function(req, res, next) {
-  res.redirect(301, 'https://mapchart.net/ads.txt');
+  res.redirect(301, 'https://cfadstxt.s3.amazonaws.com/ads.txt');
 });
 
 app.use(compression()); //Compress all routes
