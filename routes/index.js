@@ -15,7 +15,7 @@ router.get('/feedback', function(req, res, next) {
 });
 
 router.get('/ads.txt', function(req, res, next) {
-  res.send('ads.txt');
+  res.sendFile('ads.txt');
 });
 
 
