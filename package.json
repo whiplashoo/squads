@@ -20,8 +20,9 @@
     "morgan": "~1.9.0",
     "nodemailer": "^6.1.1",
     "pug": "^2.0.1",
+    "sendgrid": "^4.2.0",
     "serve-favicon": "~2.4.5",
-    "sendgrid": "^4.2.0"
+    "serve-static": "^1.14.1"
   },
   "devDependencies": {
     "nodemon": "^1.15.1",
