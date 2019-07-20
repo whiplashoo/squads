@@ -3,6 +3,11 @@ extends layout
 block content
   section.section.main
     .container.is-fluid
+      .columns.is-centered
+        .column.is-narrow
+          .notification.is-warning
+            button.delete
+            | All players photos and details will be updated late August/early September, with the closing of the transfer window.
       .columns.is-desktop
         .column.is-narrow.is-5#canvas-container
           canvas#canvas1(width='500', height='700')
