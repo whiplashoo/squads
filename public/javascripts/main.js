@@ -29,7 +29,7 @@ $(document).ready(function() {
         var selected = e.params.data;
         var id = $(this).data('id');
 
-        var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + selected.s3url + ".png";
+        var imgURL = "https://d23che8a43he9x.cloudfront.net/" + selected.s3url + ".png";
 
         currentData[id] = { "imgURL": imgURL, "name": selected.text, "s3url": selected.s3url };
 
@@ -64,7 +64,7 @@ function loadPlayer(s3url, id) {
         var option = new Option(data.name, data.id, true, true);
         playerSelect.append(option).trigger('change');
 
-        var imgURL = "https://s3.eu-west-2.amazonaws.com/players-whidev/" + s3url + ".png";
+        var imgURL = "https://d23che8a43he9x.cloudfront.net/" + s3url + ".png";
 
         currentData[id] = { "name": data.name, "imgURL": imgURL, "s3url": s3url };
 
@@ -82,7 +82,7 @@ function optionData(data, container) {
 
 function template(data, container) {
     if (data.text && data.s3url) {
-        var pImg = '<div class="column is-one-third"><img crossorigin="anonymous" class="player-img" src="https://s3.eu-west-2.amazonaws.com/players-whidev/' + data.s3url + '.png"/></div>';
+        var pImg = '<div class="column is-one-third"><img crossorigin="anonymous" class="player-img" src="https://d23che8a43he9x.cloudfront.net/' + data.s3url + '.png"/></div>';
         var pName = '<div class="column"><p class="player-name"><strong>' + data.text + '</strong></p>';
         var pDetails = '<p class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</p></div>';
         return '<div class="columns">' + pImg + pName + pDetails + '</div>';
