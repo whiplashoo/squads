@@ -70,5 +70,6 @@ PicsFinal/
 *.py
 *.csv
 PicsToUpload/
+Pics2019/
 squadsvenv/
 config.json
