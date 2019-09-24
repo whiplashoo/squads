@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-
+    console.log("CACA")
     // Get all "navbar-burger" elements
     var $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
