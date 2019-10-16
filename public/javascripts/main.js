@@ -3,6 +3,7 @@ var currentData = {};
 $(document).ready(function() {
 
     prepareCanvas();
+    prepareDraft();
 
     $(".search-entity").select2({
         ajax: {
@@ -70,6 +71,8 @@ function loadPlayer(s3url, id) {
 
         playerSelect.parent().siblings('.search-selected').html(data.name);
 
+
+
         updateCanvas();
     });
 }
@@ -122,6 +125,12 @@ function updateCanvas() {
 
             // .src always after onload event
             imageObj.src = imgURL;
+
+            console.log(imgURL);
+            var img = $('<img id="dynamic">'); 
+            img.attr('src', imgURL);
+            console.log(img);
+            $('#test').after(img);
 
             ctx.fillStyle = "#444";
             ctx.fillRect(destX + 10, destY + 100, 80, 20);
@@ -180,6 +189,22 @@ function drawPositionCircle(ctx, posName, destX, destY, color) {
     ctx.closePath();
 }
 
+function prepareDraft() {
+    var positions = $(".position-label");
+    var draftPositions = $(".draft-pos");
+    for (var i = 0; i < 11; i++) {
+        var newPos = currentFormation[i];
+        var destX = newPos.cx + 30;
+        var destY = newPos.cy + 30;
+        var posName = newPos.pos;
+
+        $(draftPositions[i]).css({
+            "left": destX,
+            "top": destY,
+            "background-color": circleColors[posName]
+        }).html(posName);
+    }
+}
 
 function prepareCanvas() {
     var canvas = document.getElementById("canvas1");
