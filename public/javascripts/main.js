@@ -29,10 +29,31 @@ $(document).ready(function() {
     $(".search-entity").on("select2:select", function(e) {
         var selected = e.params.data;
         var id = $(this).data('id');
+        var targetX = parseInt($(this).data('cx'));
+        var targetY = parseInt($(this).data('cy'));
 
         var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + selected.s3url + ".png";
 
         currentData[id] = { "imgURL": imgURL, "name": selected.text, "s3url": selected.s3url };
+
+        var $draftImg;
+        var $draftLabel;
+        // If there is already an img for this position on the draft
+        if ($("#draft-img-" + id).length) {
+            $draftImg = $("#draft-img-" + id);
+            $draftLabel = $("#draft-label-" + id);
+        } else {
+            $draftImg = $("<img crossorigin='anonymous' class='draft-img' id='draft-img-" + id + "'/>");
+            $draftLabel = $("<span class='draft-label' id='draft-label-" + id + "'></span>");
+        }
+        $draftImg.attr("src", imgURL); 
+        $draftLabel.html(selected.text.split(" ").splice(-1));
+        
+        $("#draft-container-" + id).append([$draftImg, $draftLabel]).css({
+            "left": targetX,
+            "top": targetY
+        });
+        $("#draft-pos-" + id).hide();
 
         updateCanvas();
 
@@ -51,6 +72,7 @@ $(document).ready(function() {
     $("#formationSelect").change(function() {
         currentFormation = formations[$(this).val()];
         updateCanvas();
+        prepareDraft();
     });
 });
 
@@ -65,16 +87,17 @@ function loadPlayer(s3url, id) {
         var option = new Option(data.name, data.id, true, true);
         playerSelect.append(option).trigger('change');
 
-        var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + s3url + ".png";
+        var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + s3url + ".png?crossorigin";
 
         currentData[id] = { "name": data.name, "imgURL": imgURL, "s3url": s3url };
 
         playerSelect.parent().siblings('.search-selected').html(data.name);
 
 
+       //updateCanvas();
 
-        updateCanvas();
-    });
+
+   });
 }
 
 function optionData(data, container) {
@@ -125,12 +148,6 @@ function updateCanvas() {
 
             // .src always after onload event
             imageObj.src = imgURL;
-
-            console.log(imgURL);
-            var img = $('<img id="dynamic">'); 
-            img.attr('src', imgURL);
-            console.log(img);
-            $('#test').after(img);
 
             ctx.fillStyle = "#444";
             ctx.fillRect(destX + 10, destY + 100, 80, 20);
@@ -191,18 +208,29 @@ function drawPositionCircle(ctx, posName, destX, destY, color) {
 
 function prepareDraft() {
     var positions = $(".position-label");
-    var draftPositions = $(".draft-pos");
-    for (var i = 0; i < 11; i++) {
-        var newPos = currentFormation[i];
-        var destX = newPos.cx + 30;
-        var destY = newPos.cy + 30;
+    var draftContainers = $(".draft-container");
+    for (var id = 0; id < 11; id++) {
+        var newPos = currentFormation[id];
+        var destX = newPos.cx;
+        var destY = newPos.cy;
         var posName = newPos.pos;
 
-        $(draftPositions[i]).css({
+
+        $(draftContainers[id]).css({
             "left": destX,
             "top": destY,
+        })
+        
+        if ($("#draft-pos-" + id).length) {
+            var $draftPos = $("#draft-pos-" + id);
+        } else {
+            var $draftPos = $("<div class='draft-pos' id='draft-pos-" + id + "'> </div>");
+            $(draftContainers[id]).append($draftPos);
+        }
+        
+        $draftPos.html(posName).css({
             "background-color": circleColors[posName]
-        }).html(posName);
+        });
     }
 }
 
@@ -347,6 +375,10 @@ $(".remove-player").on("click", function() {
     delete currentData[id];
 
     updateCanvas();
+
+    $("#draft-label-" + id).remove();
+    $("#draft-img-" + id).remove();
+    $("#draft-pos-" + id).show();
 
     $positionDiv.find('.search-selected').html("");
     $positionDiv.find('.search-entity').val("").trigger("change");
