@@ -3,7 +3,7 @@ var currentData = {};
 $(document).ready(function() {
 
     prepareCanvas();
-    prepareDraft();
+    updateDraft();
 
     $(".search-entity").select2({
         ajax: {
@@ -55,8 +55,6 @@ $(document).ready(function() {
         });
         $("#draft-pos-" + id).hide();
 
-        updateCanvas();
-
         $(this).val('').trigger('change');
 
         $(this).parent().siblings('.search-selected').html(selected.text);
@@ -65,14 +63,12 @@ $(document).ready(function() {
     $(".search-entity").on("select2:unselect", function(e) {
         var selected = e.params.data;
         var id = $(this).data('id');
-        updateCanvas();
         $(this).parent().siblings('.search-selected').html('');
     });
 
     $("#formationSelect").change(function() {
         currentFormation = formations[$(this).val()];
-        updateCanvas();
-        prepareDraft();
+        updateDraft();
     });
 });
 
@@ -119,13 +115,10 @@ function template(data, container) {
 function updateCanvas() {
     var selects = $(".search-entity");
     var positions = $(".position-label");
+    var title = $("#draft-title").html();
 
     var canvas = document.getElementById("canvas1");
     var ctx = canvas.getContext("2d");
-
-    // Reset Canvas.
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    prepareCanvas();
 
     for (var i = 0; i < 11; i++) {
         var newPos = currentFormation[i];
@@ -138,16 +131,8 @@ function updateCanvas() {
 
         //  If the select2 select has a value and we are on the visible canvas1, draw an image, else a simple circle.
         if (player && player.imgURL) {
-            // Draw the image to the new newPosition
-            var imgURL = player.imgURL + "?crossorigin"
-            var imageObj = new Image();
-
-            
-            imageObj.crossOrigin = "anonymous";
-            imageObj.onload = drawCanvasImage(canvas, ctx, imageObj, destX, destY);
-
-            // .src always after onload event
-            imageObj.src = imgURL;
+            var img = document.getElementById("draft-img-" + i);
+            ctx.drawImage(img, destX, destY, 100, 100);
 
             ctx.fillStyle = "#444";
             ctx.fillRect(destX + 10, destY + 100, 80, 20);
@@ -165,29 +150,27 @@ function updateCanvas() {
         sel.setAttribute("data-cy", destY);
         $(positions[i]).css("background-color", circleColors[posName]).html(posName);
     }
+
+    ctx.fillStyle = "#444";
+    ctx.fillRect(0, 0, 200, 20);
+    ctx.font = "12px Fira Sans";
+    ctx.fillStyle = "#f0f600";
+    ctx.textAlign = "left";
+    ctx.fillText(title, 10, 15);
 }
 
 function updateTitle(newTitle) {
-    var canvas = document.getElementById("canvas1");
-    var ctx = canvas.getContext("2d");
-    // Write the Title
-    if (newTitle !== '') {
-        ctx.fillStyle = "#444";
-        ctx.fillRect(0, 0, 200, 20);
-        ctx.font = "12px Fira Sans";
-        ctx.fillStyle = "#f0f600";
-        ctx.textAlign = "left";
-        ctx.fillText(newTitle, 10, 15);
+    var $draftTitle;
+    if ($("#draft-title").length) {
+        $draftTitle = $("#draft-title");
     } else {
-        updateCanvas();
+        $draftTitle = $("<span id='draft-title'></span>")
+        $("#draft").append($draftTitle);
     }
-
-}
-
-var drawCanvasImage = function(canvas, ctx, imageObj, destX, destY) {
-    return function() {
-        ctx.drawImage(imageObj, destX, destY, 100, 100);
-        localStorage.setItem( "savedImageData", canvas.toDataURL("image/png") );
+    if (newTitle !== "") {
+        $draftTitle.html(newTitle);
+    } else {
+        $draftTitle.remove();
     }
 }
 
@@ -206,7 +189,7 @@ function drawPositionCircle(ctx, posName, destX, destY, color) {
     ctx.closePath();
 }
 
-function prepareDraft() {
+function updateDraft() {
     var positions = $(".position-label");
     var draftContainers = $(".draft-container");
     for (var id = 0; id < 11; id++) {
@@ -214,7 +197,6 @@ function prepareDraft() {
         var destX = newPos.cx;
         var destY = newPos.cy;
         var posName = newPos.pos;
-
 
         $(draftContainers[id]).css({
             "left": destX,
@@ -342,39 +324,21 @@ function prepareCanvas() {
 }
 
 $(".position").hover(function() {
-    $(this).addClass('highlight');
-
+    $(this).addClass('focused');
     var select = $(this).find('.search-entity');
     var id = select.data('id');
-    if (!currentData[id]) {
-        var destX = parseInt(select.attr('data-cx'));
-        var destY = parseInt(select.attr('data-cy'));
-        var posName = currentFormation[select.attr('data-id')].pos;
-        var canvas = document.getElementById("canvas1");
-        var ctx = canvas.getContext("2d");
-        drawPositionCircle(ctx, posName, destX, destY, "red");
-    }
+    $("#draft-pos-" + id).addClass('focused');
 }, function() {
-    $(this).removeClass('highlight');
-
+    $(this).removeClass('focused');
     var select = $(this).find('.search-entity');
     var id = select.data('id');
-    if (!currentData[id]) {
-        var destX = parseInt(select.attr('data-cx'));
-        var destY = parseInt(select.attr('data-cy'));
-        var posName = currentFormation[select.attr('data-id')].pos;
-        var canvas = document.getElementById("canvas1");
-        var ctx = canvas.getContext("2d");
-        drawPositionCircle(ctx, posName, destX, destY, "#fff");
-    }
+    $("#draft-pos-" + id).removeClass('focused');
 });
 
 $(".remove-player").on("click", function() {
     var $positionDiv = $(this).parent().parent();
     var id = $positionDiv.find('.search-entity').data('id');
     delete currentData[id];
-
-    updateCanvas();
 
     $("#draft-label-" + id).remove();
     $("#draft-img-" + id).remove();
@@ -433,6 +397,7 @@ $('.toggleModal').on("click",function(){
 });
 
 $("#download").on("click", function() {
+    updateCanvas();
     var canvas = document.getElementById("canvas1");
     var ctx = canvas.getContext("2d");
 
