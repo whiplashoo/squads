@@ -73,7 +73,7 @@ html {
   padding: 0 20px 0 10px;
   text-align: center;
 }
-.position.highlight {
+.position.focused {
   box-shadow: 0px 0px 9px 3px rgba(207, 207, 207, 1);
 }
 
@@ -221,6 +221,11 @@ fieldset {
   left: 30px;
 }
 
+.draft-pos.focused {
+  box-shadow: 0px 0px 9px 3px rgb(220, 220, 220);
+  border: 1px solid red;
+}
+
 .draft-img {
   width: 100px;
   height: 100px;
@@ -234,4 +239,11 @@ fieldset {
   position: absolute;
   bottom: -10px;
   left: 5px;
+}
+
+#draft-title {
+  background-color: #444;
+  padding: 2px 5px;
+  color: #f0f600;
+  font-family: Fira Sans;
 }
