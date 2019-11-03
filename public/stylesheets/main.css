@@ -199,6 +199,7 @@ fieldset {
   background-repeat: no-repeat; 
   background-size: cover; 
   position: relative;
+  min-width: 450px;
 }
 
 .draft-container {

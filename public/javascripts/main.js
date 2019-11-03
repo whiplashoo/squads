@@ -33,30 +33,13 @@ $(document).ready(function() {
         var targetY = parseInt($(this).data('cy'));
 
         var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + selected.s3url + ".png";
+        var playerName = selected.text;
 
-        currentData[id] = { "imgURL": imgURL, "name": selected.text, "s3url": selected.s3url };
+        currentData[id] = { "imgURL": imgURL, "name": playerName, "s3url": selected.s3url };
 
-        var $draftImg;
-        var $draftLabel;
-        // If there is already an img for this position on the draft
-        if ($("#draft-img-" + id).length) {
-            $draftImg = $("#draft-img-" + id);
-            $draftLabel = $("#draft-label-" + id);
-        } else {
-            $draftImg = $("<img crossorigin='anonymous' class='draft-img' id='draft-img-" + id + "'/>");
-            $draftLabel = $("<span class='draft-label' id='draft-label-" + id + "'></span>");
-        }
-        $draftImg.attr("src", imgURL); 
-        $draftLabel.html(selected.text.split(" ").splice(-1));
-        
-        $("#draft-container-" + id).append([$draftImg, $draftLabel]).css({
-            "left": targetX,
-            "top": targetY
-        });
-        $("#draft-pos-" + id).hide();
+        upsertImage(id, imgURL, playerName);
 
         $(this).val('').trigger('change');
-
         $(this).parent().siblings('.search-selected').html(selected.text);
     });
 
@@ -72,29 +55,25 @@ $(document).ready(function() {
     });
 });
 
-function loadPlayer(s3url, id) {
-    // Fetch the preselected item, and add to the control
-    var playerSelect = $('.search-entity[data-id="' + id + '"]');
-    $.ajax({
-        type: 'GET',
-        url: '/api/player/p/' + s3url
-    }).then(function (data) {
-
-        var option = new Option(data.name, data.id, true, true);
-        playerSelect.append(option).trigger('change');
-
-        var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + s3url + ".png?crossorigin";
-
-        currentData[id] = { "name": data.name, "imgURL": imgURL, "s3url": s3url };
-
-        playerSelect.parent().siblings('.search-selected').html(data.name);
-
-
-       //updateCanvas();
-
-
-   });
+function upsertImage(id, imgURL, playerName) {
+    var $draftImg;
+    var $draftLabel;
+    // If there is already an img for this position on the draft
+    if ($("#draft-img-" + id).length) {
+        $draftImg = $("#draft-img-" + id);
+        $draftLabel = $("#draft-label-" + id);
+    } else {
+        $draftImg = $("<img crossorigin='anonymous' class='draft-img' id='draft-img-" + id + "'/>");
+        $draftLabel = $("<span class='draft-label' id='draft-label-" + id + "'></span>");
+    }
+    $draftImg.attr("src", imgURL); 
+    $draftLabel.html(playerName.split(" ").splice(-1));
+    
+    $("#draft-container-" + id).append([$draftImg, $draftLabel])
+    $("#draft-pos-" + id).hide();
 }
+
+
 
 function optionData(data, container) {
     $(data.element).attr("data-s3url", data.s3url);
@@ -109,54 +88,6 @@ function template(data, container) {
         var pDetails = '<p class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</p></div>';
         return '<div class="columns">' + pImg + pName + pDetails + '</div>';
     }
-}
-
-
-function updateCanvas() {
-    var selects = $(".search-entity");
-    var positions = $(".position-label");
-    var title = $("#draft-title").html();
-
-    var canvas = document.getElementById("canvas1");
-    var ctx = canvas.getContext("2d");
-
-    for (var i = 0; i < 11; i++) {
-        var newPos = currentFormation[i];
-        var sel = selects[i];
-        var player = currentData[i.toString()];
-
-        var destX = newPos.cx;
-        var destY = newPos.cy;
-        var posName = newPos.pos;
-
-        //  If the select2 select has a value and we are on the visible canvas1, draw an image, else a simple circle.
-        if (player && player.imgURL) {
-            var img = document.getElementById("draft-img-" + i);
-            ctx.drawImage(img, destX, destY, 100, 100);
-
-            ctx.fillStyle = "#444";
-            ctx.fillRect(destX + 10, destY + 100, 80, 20);
-            ctx.font = "14px Fira Sans";
-            ctx.fillStyle = "white";
-            ctx.textAlign = "center";
-            ctx.fillText(player.name.split(" ").splice(-1), destX + 50, destY + 115);
-        } else {
-            drawPositionCircle(ctx, posName, destX, destY, "#fff");
-        }
-
-        // Set the new attributes for each position.
-        sel.setAttribute("data-id", i);
-        sel.setAttribute("data-cx", destX);
-        sel.setAttribute("data-cy", destY);
-        $(positions[i]).css("background-color", circleColors[posName]).html(posName);
-    }
-
-    ctx.fillStyle = "#444";
-    ctx.fillRect(0, 0, 200, 20);
-    ctx.font = "12px Fira Sans";
-    ctx.fillStyle = "#f0f600";
-    ctx.textAlign = "left";
-    ctx.fillText(title, 10, 15);
 }
 
 function updateTitle(newTitle) {
@@ -190,6 +121,8 @@ function drawPositionCircle(ctx, posName, destX, destY, color) {
 }
 
 function updateDraft() {
+    let draftW = $('#draft').width();
+    let draftH = $('#draft').height();
     var positions = $(".position-label");
     var draftContainers = $(".draft-container");
     for (var id = 0; id < 11; id++) {
@@ -199,8 +132,8 @@ function updateDraft() {
         var posName = newPos.pos;
 
         $(draftContainers[id]).css({
-            "left": destX,
-            "top": destY,
+            "left": destX + "%",
+            "top": destY + "%",
         })
         
         if ($("#draft-pos-" + id).length) {
@@ -222,6 +155,9 @@ function prepareCanvas() {
     var padd = 30;
     var w = canvas.width; //500
     var h = canvas.height; //700
+    var selects = $(".search-entity");
+    var positions = $(".position-label");
+    var title = $("#draft-title").html();
 
     // -- START DRAWING THE FIELD --
     ctx.fillStyle = "#52AC5B";
@@ -301,25 +237,46 @@ function prepareCanvas() {
     ctx.textAlign = "center";
     ctx.fillText("Created with CreateFormation.com", 410, 695);
 
-    // -- START DRAWING THE POSITION CIRCLES --
-    var selects = $(".search-entity");
-    var positions = $(".position-label");
     for (var i = 0; i < 11; i++) {
-        var sel = selects[i];
         var newPos = currentFormation[i];
-        var destX = newPos.cx;
-        var destY = newPos.cy;
+        var sel = selects[i];
+        var player = currentData[i.toString()];
+
+        var destX = newPos.cx * w / 100;
+        var destY = newPos.cy * h / 100;
         var posName = newPos.pos;
 
-        drawPositionCircle(ctx, posName, destX, destY, "#fff");
+        //  If the select2 select has a value, draw an image, else a simple circle.
+        if (player && player.imgURL) {
+            var img = document.getElementById("draft-img-" + i);
+            ctx.drawImage(img, destX, destY, 100, 100);
 
-        // Set the new attributes for each newPosition
+            ctx.fillStyle = "#444";
+            ctx.fillRect(destX + 10, destY + 100, 80, 20);
+            ctx.font = "14px Fira Sans";
+            ctx.fillStyle = "white";
+            ctx.textAlign = "center";
+            ctx.fillText(player.name.split(" ").splice(-1), destX + 50, destY + 115);
+        } else {
+            drawPositionCircle(ctx, posName, destX, destY, "#fff");
+        }
+
+        // Set the new attributes for each position.
         sel.setAttribute("data-id", i);
         sel.setAttribute("data-cx", destX);
         sel.setAttribute("data-cy", destY);
         $(positions[i]).css("background-color", circleColors[posName]).html(posName);
     }
-    // -- END DRAWING THE POSITION CIRCLES --
+
+    if (title) {
+        ctx.fillStyle = "#444";
+        ctx.fillRect(0, 0, 200, 20);
+        ctx.font = "12px Fira Sans";
+        ctx.fillStyle = "#f0f600";
+        ctx.textAlign = "left";
+        ctx.fillText(title, 10, 15);
+    }   
+    // -- END SETTING SELECTS VALUES --
 
 }
 
@@ -373,6 +330,27 @@ function loadConfig(loadData) {
     }
 }
 
+function loadPlayer(s3url, id) {
+    // Fetch the preselected item, and add to the control
+    var playerSelect = $('.search-entity[data-id="' + id + '"]');
+    $.ajax({
+        type: 'GET',
+        url: '/api/player/p/' + s3url
+    }).then(function (data) {
+
+        var option = new Option(data.name, data.id, true, true);
+        playerSelect.append(option).trigger('change');
+
+        var imgURL = "https://d3obiipglq02d0.cloudfront.net/" + s3url + ".png?crossorigin";
+        var playerName = data.name;
+
+        currentData[id] = { "name": playerName, "imgURL": imgURL, "s3url": s3url };
+
+        playerSelect.parent().siblings('.search-selected').html(data.name);
+
+        upsertImage(id, imgURL, playerName);
+    });
+}
 
 /********************
 **  EVENT LISTENERS
@@ -397,7 +375,7 @@ $('.toggleModal').on("click",function(){
 });
 
 $("#download").on("click", function() {
-    updateCanvas();
+    prepareCanvas();
     var canvas = document.getElementById("canvas1");
     var ctx = canvas.getContext("2d");
 
