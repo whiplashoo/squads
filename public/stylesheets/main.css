@@ -6,7 +6,7 @@ html {
   overflow-x: auto;
 }
 
-#finalCanvas {
+#canvas1 {
   display: none;
 }
 .section-bg {
