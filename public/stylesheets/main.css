@@ -199,7 +199,6 @@ fieldset {
   background-repeat: no-repeat; 
   background-size: cover; 
   position: relative;
-  min-width: 450px;
 }
 
 @media screen and (max-width: 768px) {
