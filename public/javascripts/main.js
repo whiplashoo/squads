@@ -22,7 +22,7 @@ $(document).ready(function() {
             cache: true
         },
         placeholder: "Search for a player...",
-        escapeMarkup: function(m) { return m; }, // let our custom formatter work
+        escapeMarkup: function(m) { return m; },
         minimumInputLength: 4,
         templateResult: template,
         templateSelection: optionData
@@ -31,9 +31,6 @@ $(document).ready(function() {
     $(".search-entity").on("select2:select", function(e) {
         const selected = e.params.data;
         const id = $(this).data('id');
-        const targetX = parseInt($(this).data('cx'));
-        const targetY = parseInt($(this).data('cy'));
-
         const imgURL = "https://d3obiipglq02d0.cloudfront.net/" + selected.s3url + ".png";
         const playerName = selected.text;
 
@@ -62,10 +59,10 @@ function upsertImage(id, imgURL, playerName) {
         $draftImg = $("<img crossorigin='anonymous' class='draft-img' id='draft-img-" + id + "'/>");
         $draftLabel = $("<span class='draft-label' id='draft-label-" + id + "'></span>");
     }
-    $draftImg.attr("src", imgURL); 
+    $draftImg.attr("src", imgURL);
     $draftLabel.html(playerName.split(" ").splice(-1));
-    
-    $("#draft-container-" + id).append([$draftImg, $draftLabel])
+
+    $("#draft-container-" + id).append([$draftImg, $draftLabel]);
     $("#draft-pos-" + id).hide();
 }
 
@@ -89,7 +86,7 @@ function updateTitle(newTitle) {
     if ($("#draft-title").length) {
         $draftTitle = $("#draft-title");
     } else {
-        $draftTitle = $("<span id='draft-title'></span>")
+        $draftTitle = $("<span id='draft-title'></span>");
         $("#draft").append($draftTitle);
     }
     if (newTitle !== "") {
@@ -115,8 +112,6 @@ function drawPositionCircle(ctx, posName, destX, destY, color) {
 }
 
 function updateDraft() {
-    const draftW = $('#draft').width();
-    const draftH = $('#draft').height();
     const positions = $(".position-label");
     const draftContainers = $(".draft-container");
     for (let id = 0; id < 11; id++) {
@@ -137,7 +132,7 @@ function updateDraft() {
             $draftPos = $("<div class='draft-pos' id='draft-pos-" + id + "'> </div>");
             $(draftContainers[id]).append($draftPos);
         }
-        
+
         $draftPos.css("background-color", circleColors[posName]).html(posName);
         $(positions[id]).css("background-color", circleColors[posName]).html(posName);
     }
@@ -204,9 +199,9 @@ function prepareCanvas() {
 
     // -- Circles and semi-circles --
     ctx.moveTo(400, padd + 200);
-    ctx.quadraticCurveTo(w / 2, padd + 270, 600, padd + 200)
+    ctx.quadraticCurveTo(w / 2, padd + 270, 600, padd + 200);
     ctx.moveTo(400, h - padd - 200);
-    ctx.quadraticCurveTo(w / 2, h - padd - 270, 600, h - padd - 200)
+    ctx.quadraticCurveTo(w / 2, h - padd - 270, 600, h - padd - 200);
     ctx.moveTo(w / 2, h / 2);
     ctx.arc(w / 2, h / 2, 60, 0, Math.PI * 2, true);
 
@@ -269,7 +264,7 @@ function prepareCanvas() {
         ctx.fillStyle = "#f0f600";
         ctx.textAlign = "left";
         ctx.fillText(title, 20, 30);
-    }   
+    }
 }
 
 $(".position").hover(function() {
@@ -319,7 +314,7 @@ function loadConfig(loadData) {
         if (loadData[i]) {
             let p = loadData[i];
             loadPlayer(p.id, i);
-        } 
+        }
     }
 }
 
@@ -370,7 +365,6 @@ $('.toggleModal').on("click",function(){
 $("#download").on("click", function() {
     prepareCanvas();
     var canvas = document.getElementById("canvas1");
-    var ctx = canvas.getContext("2d");
     this.href = canvas.toDataURL();
     var d = new Date();
     var dateString = d.toLocaleString().replace(/[^\w\s]/gi, '_');
@@ -379,7 +373,7 @@ $("#download").on("click", function() {
 
 $('#formation-title').change(function() {
     updateTitle($(this).val());
-})
+});
 
 
 
