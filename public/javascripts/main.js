@@ -1,6 +1,5 @@
 let playersOnDraft = {};
 // #TODO:
-// - Check responsiveness
 // - Drag and drop?
 
 $(document).ready(function() {
@@ -267,30 +266,7 @@ function prepareCanvas() {
     }
 }
 
-$(".position").hover(function() {
-    $(this).addClass('focused');
-    const select = $(this).find('.search-entity');
-    const id = select.data('id');
-    $("#draft-pos-" + id).addClass('focused');
-}, function() {
-    $(this).removeClass('focused');
-    const select = $(this).find('.search-entity');
-    const id = select.data('id');
-    $("#draft-pos-" + id).removeClass('focused');
-});
 
-$(".remove-player").on("click", function() {
-    const $positionDiv = $(this).parent().parent();
-    const id = $positionDiv.find('.search-entity').data('id');
-    delete playersOnDraft[id];
-
-    $("#draft-label-" + id).remove();
-    $("#draft-img-" + id).remove();
-    $("#draft-pos-" + id).show();
-
-    $positionDiv.find('.search-selected').html("");
-    $positionDiv.find('.search-entity').val("").trigger("change");
-});
 
 /********************
 **  SAVE/LOAD CONFIG
@@ -343,6 +319,31 @@ function loadPlayer(s3url, id) {
 /********************
 **  EVENT LISTENERS
 ********************/
+$(".position").hover(function() {
+    $(this).addClass('focused');
+    const select = $(this).find('.search-entity');
+    const id = select.data('id');
+    $("#draft-pos-" + id).addClass('focused');
+}, function() {
+    $(this).removeClass('focused');
+    const select = $(this).find('.search-entity');
+    const id = select.data('id');
+    $("#draft-pos-" + id).removeClass('focused');
+});
+
+$(".remove-player").on("click", function() {
+    const $positionDiv = $(this).parent().parent();
+    const id = $positionDiv.find('.search-entity').data('id');
+    delete playersOnDraft[id];
+
+    $("#draft-label-" + id).remove();
+    $("#draft-img-" + id).remove();
+    $("#draft-pos-" + id).show();
+
+    $positionDiv.find('.search-selected').html("");
+    $positionDiv.find('.search-entity').val("").trigger("change");
+});
+
 $('#loadFormation').on("click",function() {
     let loadData = JSON.parse($('#formationDataHolder').val());
     loadConfig(loadData);
