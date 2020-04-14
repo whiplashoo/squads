@@ -61,7 +61,12 @@ function upsertImage(id, imgURL, playerName) {
     $draftImg.attr("src", imgURL);
 
     // Remove the first word from the name (probably the first name)
-    $draftLabel.html(playerName.split(" ").slice(1).join(" "));
+    if (playerName.split(" ").length !== 1) {
+        $draftLabel.html(playerName.split(" ").slice(1).join(" "));
+    } else {
+        $draftLabel.html(playerName);
+    }
+    
 
     $("#draft-container-" + id).append([$draftImg, $draftLabel]);
     $("#draft-pos-" + id).hide();
