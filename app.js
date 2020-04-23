@@ -53,8 +53,13 @@ app.use('/', index);
 var Player = require('./models/player');
 
 app.get('/search/', function(req, res) {
+    var clubSearch = (req.query.clubSearch === 'true') ? true : false;
     var term = new RegExp(req.query.q.toLowerCase(), 'i');
-    var query = Player.find({$or:[{ plain_name: term }, {club: term}]}).sort({rating: -1}).limit(20);
+    if (clubSearch) {
+        var query = Player.find({$or:[{ plain_name: term }, {club: term}]}).sort({rating: -1}).limit(25);
+    } else {
+        var query = Player.find({ plain_name: term }).sort({rating: -1}).limit(20);
+    }
     // Execute query in a callback and return players list
     query.exec(function(err, players) {
         if (!err) {

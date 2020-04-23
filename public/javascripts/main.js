@@ -13,7 +13,10 @@ $(document).ready(function() {
             dataType: "json",
             delay: 250,
             data: function(params) {
-                return { q: params.term };
+                var clubSearch = ($('#clubSearch').is(':checked')) ? true : false;
+                return { q: params.term,
+                         clubSearch: clubSearch
+                        };
             },
             processResults: function(data) {
                 return { results: data };

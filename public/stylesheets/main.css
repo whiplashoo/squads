@@ -253,3 +253,7 @@ fieldset {
   color: #f0f600;
   font-family: Fira Sans;
 }
+
+.extra-options {
+  padding-top: 20px;
+}

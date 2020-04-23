@@ -65,7 +65,7 @@ block content
               .column.is-1
                 span.tool-heading Position
               .column.is-6
-                span.tool-heading Search
+                span.tool-heading Search *
               .column.is-4-tablet.is-3-mobile
                 span.tool-heading Player Name
               .column.is-1-tablet.is-2-mobile
@@ -158,7 +158,11 @@ block content
               .column.is-4-tablet.is-3-mobile.search-selected
               .column.is-1-tablet.is-2-mobile
                 a.delete.is-medium.remove-player
-          .level
+          .level.extra-options
+            .level-item
+              label.checkbox
+                  input(type='checkbox', id='clubSearch')
+                  |   * Also search by club
             .level-item
               a.button.is-info.is-rounded.toggleModal Save/Load Formation Data
   .modal
