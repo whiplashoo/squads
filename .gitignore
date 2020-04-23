@@ -62,7 +62,7 @@ mydump.csv
 replaceaccented.js
 populatedb.js
 populatedbSingle.js
-findDuplicateLegends.js
+removeDuplicateLegends.js
 updateclubs.js
 Missing/
 PicsFinal/
