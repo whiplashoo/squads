@@ -2,7 +2,7 @@ doctype html
 head
   meta(charset='utf-8')
   meta(http-equiv='x-ua-compatible', content='ie=edge')
-  title Create your own Football Formation with Player Photos
+  title #{title}
   meta(name='title', content='Create your own Football Formation with Player Photos')
   meta(name='description', content='Make your own football lineup with player photos. A free squad builder that lets you create a team with your selected player portraits.')
   meta(name='viewport', content='width=device-width, initial-scale=1')
@@ -22,6 +22,7 @@ head
   link(rel='stylesheet', href='/stylesheets/main.css')
   script(src='/javascripts/modernizr-2.8.3.min.js')
   link(rel='stylesheet', href='/stylesheets/select2.min.css')
+  link(rel='stylesheet', href='/stylesheets/footable.standalone.min.css')
   script(async='', src='//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js')
   script.
     (adsbygoogle = window.adsbygoogle || []).push({
@@ -41,7 +42,6 @@ body
       a.navbar-item(href='/') 
         img.logo(src='/images/logo.png') 
         span.site-title Create Formation
-        span.beta BETA
       .navbar-burger(data-target='navMenu')
         span
         span
@@ -49,7 +49,9 @@ body
     .navbar-menu#navMenu
       .navbar-end
         .navbar-item
-          a.button.is-white.is-large(href='feedback') Feedback
+          a.button.is-white.is-normal(href='feedback') Feedback
+        .navbar-item
+          a.button.is-white.is-normal(href='legends-list') Legends List
         .navbar-item
           a.button.is-primary.is-large(href='create') Create Formation
   block content
