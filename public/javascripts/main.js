@@ -35,8 +35,9 @@ $(document).ready(function() {
         const id = $(this).data('id');
         const imgURL = "https://d3obiipglq02d0.cloudfront.net/" + selected.s3url + ".png";
         const playerName = selected.text;
+        console.log(selected);
 
-        playersOnDraft[id] = { "imgURL": imgURL, "name": playerName, "s3url": selected.s3url };
+        playersOnDraft[id] = { "imgURL": imgURL, "name": playerName, "s3url": selected.s3url, "_id": selected._id };
 
         upsertImage(id, imgURL, playerName);
 
@@ -274,6 +275,9 @@ function prepareCanvas() {
         ctx.textAlign = "left";
         ctx.fillText(title, 20, 30);
     }
+
+    
+
 }
 
 
@@ -380,6 +384,23 @@ $("#download").on("click", function() {
     var d = new Date();
     var dateString = d.toLocaleString().replace(/[^\w\s]/gi, '_');
     this.download = $('#formation-title').val() || "formation_" + dateString;
+
+    // let idsForPopular = [];
+
+    // for (let i in playersOnDraft) {
+    //     idsForPopular.push(playersOnDraft[i]._id);
+    // }
+
+    // $.ajax({
+    //     type: 'POST',
+    //     url: '/update_populars',
+    //     data: JSON.stringify({ idsForPopular: idsForPopular }),
+    //     contentType: "application/json; charset=utf-8"
+    // }).done(function(msg){
+    //     console.log(msg);
+    // }).fail(function(err){
+    //     console.log(err);
+    // });
 });
 
 $('#formation-title').change(function() {

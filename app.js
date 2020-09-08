@@ -68,6 +68,7 @@ app.get('/search/', function(req, res) {
             for (var i = 0; i < players.length; i++) {
             	var p = players[i];
             	result.push({
+                    '_id': p._id,
             		'id': i,
             		'text': p.name,
             		's3url': p.s3url,
@@ -105,6 +106,37 @@ app.get('/api/player/p/:playerS3Url', function(req, res) {
     
 });
 
+
+// app.post('/update_populars', function(req, res) {
+//     console.log(req.body);
+//     console.log(req.body.idsForPopular);
+//     console.log(idsForPopular[0]);
+
+//     Player.findOne({name: "Andrea Pirlo"}, function(err, player) {
+//         if (!err) {
+//             res.send(player, {
+//                 'Content-Type': 'application/json'
+//             }, 200);
+//         } else {
+//             res.send(JSON.stringify(err), {
+//                 'Content-Type': 'application/json'
+//             }, 404);
+//         }
+//     })
+//     // for (let id of idsForPopular) {
+//     //     console.log(id)
+//     //     Player.findByIdAndUpdate(id, { $inc: { hits: 1 }}, options, function(err, player) {
+//     //         if (err) {
+//     //             console.log(err);
+//     //         } else {
+//     //             console.log(player);
+//     //         }
+//     //     });
+//     // }
+    
+// });
+
+
 app.post('/send_email/', function(req, res) {
     var name = req.body.name;
     var email = req.body.email;
@@ -123,7 +155,7 @@ app.post('/send_email/', function(req, res) {
       method: 'POST',
       path: '/v3/mail/send',
       body: mail.toJSON(),
-  });
+    });
 
     sg.API(request, function(error, response) {
         if (response.statusCode === 202){
