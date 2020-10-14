@@ -75,7 +75,8 @@ app.get('/search/', function(req, res) {
             		'pos': p.pos,
             		'age': p.age,
             		'club': p.club,
-            		'rating': p.rating
+            		'rating': p.rating,
+                    'hits': p.hits
             	});
             }
             res.send(result, {

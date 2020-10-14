@@ -24,6 +24,7 @@
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {
+    "event-stream": "^4.0.1",
     "nodemon": "^2.0.4",
     "remove-accents": "^0.4.2"
   }

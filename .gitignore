@@ -59,9 +59,7 @@ typings/
 
 COMMANDS.txt
 mydump.csv
-replaceaccented.js
 populatedb.js
-populatedbSingle.js
 removeDuplicateLegends.js
 addHitsField.js
 updateclubs.js
@@ -73,6 +71,8 @@ PicsFinal/
 *.csv
 PicsToUpload/
 Pics2019/
+Pics2020/
+PicsLegends2020/
 squadsvenv/
 config.json
 Thumbs.db

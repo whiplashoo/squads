@@ -33,9 +33,8 @@ $(document).ready(function() {
     $(".search-entity").on("select2:select", function(e) {
         const selected = e.params.data;
         const id = $(this).data('id');
-        const imgURL = "https://d3obiipglq02d0.cloudfront.net/" + selected.s3url + ".png";
+        const imgURL = "https://d2f7uw5vxx1hdu.cloudfront.net/" + selected.s3url + ".png";
         const playerName = selected.text;
-        console.log(selected);
 
         playersOnDraft[id] = { "imgURL": imgURL, "name": playerName, "s3url": selected.s3url, "_id": selected._id };
 
@@ -84,7 +83,7 @@ function optionData(data, container) {
 
 function template(data, container) {
     if (data.text && data.s3url) {
-        const pImg = '<div class="column is-one-third"><img crossorigin="anonymous" class="player-img" src="https://d3obiipglq02d0.cloudfront.net/' + data.s3url + '.png"/></div>';
+        const pImg = '<div class="column is-one-third"><img crossorigin="anonymous" class="player-img" src="https://d2f7uw5vxx1hdu.cloudfront.net/' + data.s3url + '.png"/></div>';
         const pName = '<div class="column"><p class="player-name"><strong>' + data.text + '</strong></p>';
         const pDetails = '<p class="player-details">' + data.club + ' , ' + data.age + ' , ' + data.pos + '</p></div>';
         return '<div class="columns">' + pImg + pName + pDetails + '</div>';
@@ -319,7 +318,7 @@ function loadPlayer(s3url, id) {
         const option = new Option(data.name, data.id, true, true);
         playerSelect.append(option).trigger('change');
 
-        const imgURL = "https://d3obiipglq02d0.cloudfront.net/" + s3url + ".png?crossorigin";
+        const imgURL = "https://d2f7uw5vxx1hdu.cloudfront.net/" + s3url + ".png?crossorigin";
         const playerName = data.name;
 
         playersOnDraft[id] = { "name": playerName, "imgURL": imgURL, "s3url": s3url };
@@ -409,3 +408,12 @@ $('#formation-title').change(function() {
 
 
 
+document.addEventListener('DOMContentLoaded', () => {
+  (document.querySelectorAll('.notification .delete') || []).forEach(($delete) => {
+    var $notification = $delete.parentNode;
+
+    $delete.addEventListener('click', () => {
+      $notification.parentNode.removeChild($notification);
+    });
+  });
+});
