@@ -3,6 +3,13 @@ extends layout
 block content
   section.section.main
     .container.is-fluid
+      iframe(data-id='createformation.com_980x250_billboard_responsive_DFP' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' topmargin='0' leftmargin='0' width='1' height='1')
+      script.
+        (function () {
+        var size='970x250|300x250',
+        adunit = 'createformation.com_980x250_billboard_responsive_DFP',
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){if (xmlhttp.readyState == 4 && xmlhttp.status == 200){var es = document.querySelectorAll("[data-id='"+adunit+"']");var e = Array.from(es).find(function(e) {return !e.hasAttribute("data-rendered")});if(e){var iframe = e.contentWindow.document;iframe.open();iframe.write(xmlhttp.responseText);iframe.close();e.setAttribute('data-rendered', true)}}};xmlhttp.open("GET", 'https://pubads.g.doubleclick.net/gampad/adx?iu=/147246189/'+adunit+'&sz='+encodeURI(size)+'&t=Placement_type%3Dserving&'+Date.now(), true);xmlhttp.send();})();
       .notification.is-warning
           button.delete
           | The players database (photos, teams, etc.) has been 

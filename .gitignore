@@ -61,6 +61,7 @@ COMMANDS.txt
 mydump.csv
 populatedb.js
 removeDuplicateLegends.js
+renamePlayers.js
 addHitsField.js
 updateclubs.js
 Missing/
