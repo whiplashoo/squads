@@ -257,3 +257,8 @@ fieldset {
 .extra-options {
   padding-top: 20px;
 }
+
+.ad-cont {
+  text-align: center;
+  padding: 1em 0 4em 0;
+}
